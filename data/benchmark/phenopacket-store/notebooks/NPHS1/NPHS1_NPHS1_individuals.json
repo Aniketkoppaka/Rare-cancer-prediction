@@ -1,0 +1,680 @@
+{
+  "cohortType": "mendelian",
+  "diseaseList": [
+    {
+      "diseaseId": "OMIM:256300",
+      "diseaseLabel": "Nephrotic syndrome, type 1",
+      "modeOfInheritanceList": [
+        {
+          "hpoId": "HP:0000007",
+          "hpoLabel": "Autosomal recessive inheritance",
+          "citation": "PMID:9660941"
+        }
+      ],
+      "geneTranscriptList": [
+        {
+          "hgncId": "HGNC:7908",
+          "geneSymbol": "NPHS1",
+          "transcript": "NM_004646.4"
+        }
+      ]
+    }
+  ],
+  "hpoHeaders": [
+    {
+      "hpoLabel": "Glomerular sclerosis",
+      "hpoId": "HP:0000096"
+    },
+    {
+      "hpoLabel": "Diffuse mesangial sclerosis",
+      "hpoId": "HP:0001967"
+    },
+    {
+      "hpoLabel": "Renal tubular atrophy",
+      "hpoId": "HP:0000092"
+    },
+    {
+      "hpoLabel": "Stage 5 chronic kidney disease",
+      "hpoId": "HP:0003774"
+    },
+    {
+      "hpoLabel": "Nephrotic syndrome",
+      "hpoId": "HP:0000100"
+    },
+    {
+      "hpoLabel": "Proteinuria",
+      "hpoId": "HP:0000093"
+    },
+    {
+      "hpoLabel": "Palpebral edema",
+      "hpoId": "HP:0100540"
+    },
+    {
+      "hpoLabel": "Facial edema",
+      "hpoId": "HP:0000282"
+    },
+    {
+      "hpoLabel": "Hyperkalemia",
+      "hpoId": "HP:0002153"
+    },
+    {
+      "hpoLabel": "Decreased circulating IgG concentration",
+      "hpoId": "HP:0004315"
+    },
+    {
+      "hpoLabel": "Increased circulating lactate concentration",
+      "hpoId": "HP:0002151"
+    },
+    {
+      "hpoLabel": "Edema",
+      "hpoId": "HP:0000969"
+    },
+    {
+      "hpoLabel": "Pedal edema",
+      "hpoId": "HP:0010741"
+    },
+    {
+      "hpoLabel": "Generalized edema",
+      "hpoId": "HP:0007430"
+    },
+    {
+      "hpoLabel": "Anasarca",
+      "hpoId": "HP:0012050"
+    },
+    {
+      "hpoLabel": "Hypoproteinemia",
+      "hpoId": "HP:0003075"
+    },
+    {
+      "hpoLabel": "Hypoalbuminemia",
+      "hpoId": "HP:0003073"
+    },
+    {
+      "hpoLabel": "Hyperlipidemia",
+      "hpoId": "HP:0003077"
+    },
+    {
+      "hpoLabel": "Hypercholesterolemia",
+      "hpoId": "HP:0003124"
+    },
+    {
+      "hpoLabel": "Diarrhea",
+      "hpoId": "HP:0002014"
+    },
+    {
+      "hpoLabel": "Growth delay",
+      "hpoId": "HP:0001510"
+    },
+    {
+      "hpoLabel": "Patent foramen ovale",
+      "hpoId": "HP:0001655"
+    }
+  ],
+  "rows": [
+    {
+      "individualData": {
+        "pmid": "PMID:28392951",
+        "title": "Three Novel Mutations in the NPHS1 Gene in Vietnamese Patients with Congenital Nephrotic Syndrome",
+        "individualId": "Patient 1",
+        "comment": "na",
+        "ageOfOnset": "na",
+        "ageAtLastEncounter": "P1M9D",
+        "deceased": "no",
+        "sex": "M"
+      },
+      "diseaseIdList": [
+        "OMIM:256300"
+      ],
+      "alleleCountMap": {
+        "c3250_3251insG_NPHS1_NM_004646v4": 1,
+        "c928GtoA_NPHS1_NM_004646v4": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Excluded",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P1M9D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:28392951",
+        "title": "Three Novel Mutations in the NPHS1 Gene in Vietnamese Patients with Congenital Nephrotic Syndrome",
+        "individualId": "Patient 2",
+        "comment": "na",
+        "ageOfOnset": "na",
+        "ageAtLastEncounter": "P2M",
+        "deceased": "no",
+        "sex": "M"
+      },
+      "diseaseIdList": [
+        "OMIM:256300"
+      ],
+      "alleleCountMap": {
+        "c970TtoG_NPHS1_NM_004646v4": 1,
+        "c349GtoA_NPHS1_NM_004646v4": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Excluded",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:28392951",
+        "title": "Three Novel Mutations in the NPHS1 Gene in Vietnamese Patients with Congenital Nephrotic Syndrome",
+        "individualId": "Patient 3",
+        "comment": "na",
+        "ageOfOnset": "na",
+        "ageAtLastEncounter": "P2M14D",
+        "deceased": "yes",
+        "sex": "M"
+      },
+      "diseaseIdList": [
+        "OMIM:256300"
+      ],
+      "alleleCountMap": {
+        "c2405GtoT_NPHS1_NM_004646v4": 1,
+        "c2374AtoT_NPHS1_NM_004646v4": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "P2M14D",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:36800604",
+        "title": "A novel heterozygous mutation of the NPHS1 gene in a Chinese child with congenital nephrotic syndrome: A case report.",
+        "individualId": "Case report",
+        "comment": "",
+        "ageOfOnset": "P6D",
+        "ageAtLastEncounter": "P31D",
+        "deceased": "no",
+        "sex": "M"
+      },
+      "diseaseIdList": [
+        "OMIM:256300"
+      ],
+      "alleleCountMap": {
+        "c1864_1866dup_NPHS1_NM_004646v4": 1,
+        "c928GtoA_NPHS1_NM_004646v4": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        }
+      ]
+    }
+  ],
+  "hgvsVariants": {
+    "c3250_3251insG_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35831678,
+      "refAllele": "A",
+      "altAllele": "AC",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.3250_3251insG",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35831685dup",
+      "pHgvs": "NP_004637.1:p.(Val1084GlyfsTer12)",
+      "variantKey": "c3250_3251insG_NPHS1_NM_004646v4"
+    },
+    "c1864_1866dup_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35845431,
+      "refAllele": "A",
+      "altAllele": "AGGT",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.1864_1866dup",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35845432_35845434dup",
+      "pHgvs": "NP_004637.1:p.(Thr622dup)",
+      "variantKey": "c1864_1866dup_NPHS1_NM_004646v4"
+    },
+    "c349GtoA_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35851310,
+      "refAllele": "C",
+      "altAllele": "T",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.349G>A",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35851310C>T",
+      "pHgvs": "NP_004637.1:p.(Glu117Lys)",
+      "variantKey": "c349GtoA_NPHS1_NM_004646v4"
+    },
+    "c2374AtoT_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35842511,
+      "refAllele": "T",
+      "altAllele": "A",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.2374A>T",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35842511T>A",
+      "pHgvs": "NP_004637.1:p.(Lys792Ter)",
+      "variantKey": "c2374AtoT_NPHS1_NM_004646v4"
+    },
+    "c2405GtoT_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35842480,
+      "refAllele": "C",
+      "altAllele": "A",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.2405G>T",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35842480C>A",
+      "pHgvs": "NP_004637.1:p.(Arg802Leu)",
+      "variantKey": "c2405GtoT_NPHS1_NM_004646v4"
+    },
+    "c928GtoA_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35849060,
+      "refAllele": "C",
+      "altAllele": "T",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.928G>A",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35849060C>T",
+      "pHgvs": "NP_004637.1:p.(Asp310Asn)",
+      "variantKey": "c928GtoA_NPHS1_NM_004646v4"
+    },
+    "c970TtoG_NPHS1_NM_004646v4": {
+      "assembly": "hg38",
+      "chr": "chr19",
+      "position": 35849018,
+      "refAllele": "A",
+      "altAllele": "C",
+      "symbol": "NPHS1",
+      "hgncId": "HGNC:7908",
+      "hgvs": "c.970T>G",
+      "transcript": "NM_004646.4",
+      "gHgvs": "NC_000019.10:g.35849018A>C",
+      "pHgvs": "NP_004637.1:p.(Ser324Ala)",
+      "variantKey": "c970TtoG_NPHS1_NM_004646v4"
+    }
+  },
+  "structuralVariants": {},
+  "intergenicVariants": {},
+  "phetoolsSchemaVersion": "0.2",
+  "hpoVersion": "2026-06-23",
+  "cohortAcronym": "NPHS1_NPHS1",
+  "curationHistory": [
+    {
+      "orcid": "0000-0002-0736-9199",
+      "date": "2025-01-09"
+    }
+  ]
+}

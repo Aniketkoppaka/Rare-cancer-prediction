@@ -1,0 +1,889 @@
+{
+  "cohortType": "mendelian",
+  "diseaseList": [
+    {
+      "diseaseId": "OMIM:618499",
+      "diseaseLabel": "Noonan syndrome-11",
+      "modeOfInheritanceList": [
+        {
+          "hpoId": "HP:0000006",
+          "hpoLabel": "Autosomal dominant inheritance",
+          "citation": "PMID:28289718"
+        }
+      ],
+      "geneTranscriptList": [
+        {
+          "hgncId": "HGNC:7227",
+          "geneSymbol": "MRAS",
+          "transcript": "NM_001085049.3"
+        }
+      ]
+    }
+  ],
+  "hpoHeaders": [
+    {
+      "hpoLabel": "Bacterial endocarditis",
+      "hpoId": "HP:0006689"
+    },
+    {
+      "hpoLabel": "Excessive wrinkling of palmar skin",
+      "hpoId": "HP:0007605"
+    },
+    {
+      "hpoLabel": "Thick vermilion border",
+      "hpoId": "HP:0012471"
+    },
+    {
+      "hpoLabel": "Broad forehead",
+      "hpoId": "HP:0000337"
+    },
+    {
+      "hpoLabel": "Downslanted palpebral fissures",
+      "hpoId": "HP:0000494"
+    },
+    {
+      "hpoLabel": "Depressed nasal bridge",
+      "hpoId": "HP:0005280"
+    },
+    {
+      "hpoLabel": "Bulbous nose",
+      "hpoId": "HP:0000414"
+    },
+    {
+      "hpoLabel": "Broad neck",
+      "hpoId": "HP:0000475"
+    },
+    {
+      "hpoLabel": "Short stature",
+      "hpoId": "HP:0004322"
+    },
+    {
+      "hpoLabel": "Left ventricular outflow tract obstruction",
+      "hpoId": "HP:0032092"
+    },
+    {
+      "hpoLabel": "Cardiac arrest",
+      "hpoId": "HP:0001695"
+    },
+    {
+      "hpoLabel": "Mitral regurgitation",
+      "hpoId": "HP:0001653"
+    },
+    {
+      "hpoLabel": "Systolic anterior motion of the mitral valve",
+      "hpoId": "HP:0031656"
+    },
+    {
+      "hpoLabel": "Pulmonic stenosis",
+      "hpoId": "HP:0001642"
+    },
+    {
+      "hpoLabel": "Heart murmur",
+      "hpoId": "HP:0030148"
+    },
+    {
+      "hpoLabel": "Systolic heart murmur",
+      "hpoId": "HP:0031664"
+    },
+    {
+      "hpoLabel": "Left ventricular hypertrophy",
+      "hpoId": "HP:0001712"
+    },
+    {
+      "hpoLabel": "Ventricular hypertrophy",
+      "hpoId": "HP:0001714"
+    },
+    {
+      "hpoLabel": "Atrial septal defect",
+      "hpoId": "HP:0001631"
+    },
+    {
+      "hpoLabel": "Left atrial enlargement",
+      "hpoId": "HP:0031295"
+    },
+    {
+      "hpoLabel": "Hypertrophic cardiomyopathy",
+      "hpoId": "HP:0001639"
+    },
+    {
+      "hpoLabel": "Asymmetric septal hypertrophy",
+      "hpoId": "HP:0001670"
+    },
+    {
+      "hpoLabel": "Myocardial fibrosis",
+      "hpoId": "HP:0001685"
+    },
+    {
+      "hpoLabel": "Patent foramen ovale",
+      "hpoId": "HP:0001655"
+    },
+    {
+      "hpoLabel": "Pericardial effusion",
+      "hpoId": "HP:0001698"
+    },
+    {
+      "hpoLabel": "Hypertelorism",
+      "hpoId": "HP:0000316"
+    },
+    {
+      "hpoLabel": "Ptosis",
+      "hpoId": "HP:0000508"
+    },
+    {
+      "hpoLabel": "Posteriorly rotated ears",
+      "hpoId": "HP:0000358"
+    },
+    {
+      "hpoLabel": "Low-set ears",
+      "hpoId": "HP:0000369"
+    },
+    {
+      "hpoLabel": "Large earlobe",
+      "hpoId": "HP:0009748"
+    },
+    {
+      "hpoLabel": "Bilateral sensorineural hearing impairment",
+      "hpoId": "HP:0008619"
+    },
+    {
+      "hpoLabel": "Global developmental delay",
+      "hpoId": "HP:0001263"
+    },
+    {
+      "hpoLabel": "Cognitive impairment",
+      "hpoId": "HP:0100543"
+    },
+    {
+      "hpoLabel": "Hypotonia",
+      "hpoId": "HP:0001252"
+    },
+    {
+      "hpoLabel": "Pectus excavatum",
+      "hpoId": "HP:0000767"
+    },
+    {
+      "hpoLabel": "Joint hypermobility",
+      "hpoId": "HP:0001382"
+    }
+  ],
+  "rows": [
+    {
+      "individualData": {
+        "pmid": "PMID:28289718",
+        "title": "Elucidation of MRAS-mediated Noonan syndrome with cardiac hypertrophy",
+        "individualId": "Higgins-Patient-1",
+        "comment": "na",
+        "ageOfOnset": "P8Y",
+        "ageAtLastEncounter": "P17Y",
+        "deceased": "na",
+        "sex": "F"
+      },
+      "diseaseIdList": [
+        "OMIM:618499"
+      ],
+      "alleleCountMap": {
+        "c68GtoT_MRAS_NM_001085049v3": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Excluded",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:28289718",
+        "title": "Elucidation of MRAS-mediated Noonan syndrome with cardiac hypertrophy",
+        "individualId": "Higgins-Patient-2",
+        "comment": "na",
+        "ageOfOnset": "P1Y8M0D",
+        "ageAtLastEncounter": "P6Y",
+        "deceased": "na",
+        "sex": "F"
+      },
+      "diseaseIdList": [
+        "OMIM:618499"
+      ],
+      "alleleCountMap": {
+        "c203CtoT_MRAS_NM_001085049v3": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Excluded",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:31173466",
+        "title": "Severe Noonan syndrome phenotype associated with a germline Q71R MRAS variant: a recurrent substitution in RAS homologs in various cancers",
+        "individualId": "Suzuki-Patient-1",
+        "comment": "na",
+        "ageOfOnset": "P0Y4M0D",
+        "ageAtLastEncounter": "P6Y",
+        "deceased": "na",
+        "sex": "M"
+      },
+      "diseaseIdList": [
+        "OMIM:618499"
+      ],
+      "alleleCountMap": {
+        "c212AtoG_MRAS_NM_001085049v3": 1
+      },
+      "hpoData": [
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    },
+    {
+      "individualData": {
+        "pmid": "PMID:41517739",
+        "title": "Novel characterization of MRAS mutation-associated Noonan syndrome: Mild adult-onset hypertrophic cardiomyopathy combined with infective endocarditis: A case report.",
+        "individualId": "Case presentation",
+        "comment": "",
+        "ageOfOnset": "Childhood onset",
+        "ageAtLastEncounter": "P22Y",
+        "deceased": "no",
+        "sex": "F"
+      },
+      "diseaseIdList": [
+        "OMIM:618499"
+      ],
+      "alleleCountMap": {
+        "c203CtoT_MRAS_NM_001085049v3": 1
+      },
+      "hpoData": [
+        {
+          "type": "OnsetAge",
+          "data": "P22Y",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "Childhood onset",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "OnsetAge",
+          "data": "Childhood onset",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Observed",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        },
+        {
+          "type": "Na",
+          "modifiers": []
+        }
+      ]
+    }
+  ],
+  "hgvsVariants": {
+    "c203CtoT_MRAS_NM_001085049v3": {
+      "assembly": "hg38",
+      "chr": "chr3",
+      "position": 138397333,
+      "refAllele": "C",
+      "altAllele": "T",
+      "symbol": "MRAS",
+      "hgncId": "HGNC:7227",
+      "hgvs": "c.203C>T",
+      "transcript": "NM_001085049.3",
+      "gHgvs": "NC_000003.12:g.138397333C>T",
+      "pHgvs": "NP_001078518.1:p.(Thr68Ile)",
+      "variantKey": "c203CtoT_MRAS_NM_001085049v3"
+    },
+    "c212AtoG_MRAS_NM_001085049v3": {
+      "assembly": "hg38",
+      "chr": "chr3",
+      "position": 138397342,
+      "refAllele": "A",
+      "altAllele": "G",
+      "symbol": "MRAS",
+      "hgncId": "HGNC:7227",
+      "hgvs": "c.212A>G",
+      "transcript": "NM_001085049.3",
+      "gHgvs": "NC_000003.12:g.138397342A>G",
+      "pHgvs": "NP_001078518.1:p.(Gln71Arg)",
+      "variantKey": "c212AtoG_MRAS_NM_001085049v3"
+    },
+    "c68GtoT_MRAS_NM_001085049v3": {
+      "assembly": "hg38",
+      "chr": "chr3",
+      "position": 138372951,
+      "refAllele": "G",
+      "altAllele": "T",
+      "symbol": "MRAS",
+      "hgncId": "HGNC:7227",
+      "hgvs": "c.68G>T",
+      "transcript": "NM_001085049.3",
+      "gHgvs": "NC_000003.12:g.138372951G>T",
+      "pHgvs": "NP_001078518.1:p.(Gly23Val)",
+      "variantKey": "c68GtoT_MRAS_NM_001085049v3"
+    }
+  },
+  "structuralVariants": {},
+  "intergenicVariants": {},
+  "phetoolsSchemaVersion": "0.2",
+  "hpoVersion": "2026-06-23",
+  "cohortAcronym": "MRAS_NS11",
+  "curationHistory": [
+    {
+      "orcid": "0000-0002-0736-9199",
+      "date": "2025-01-09"
+    },
+    {
+      "orcid": "0000-0002-0736-9199",
+      "date": "2026-07-20"
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "id": "PMID_33507216_Family_F5230_Patient_CIC09152",
+  "subject": {
+    "id": "Family F5230 Patient CIC09152",
+    "timeAtLastEncounter": {
+      "age": {
+        "iso8601duration": "P37Y"
+      }
+    },
+    "sex": "MALE"
+  },
+  "phenotypicFeatures": [
+    {
+      "type": {
+        "id": "HP:0000533",
+        "label": "Chorioretinal atrophy"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0007843",
+        "label": "Attenuation of retinal blood vessels"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0000563",
+        "label": "Keratoconus"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0007787",
+        "label": "Posterior subcapsular cataract"
+      },
+      "excluded": true
+    },
+    {
+      "type": {
+        "id": "HP:0000546",
+        "label": "Retinal degeneration"
+      },
+      "severity": {
+        "id": "HP:0012825",
+        "label": "Mild"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0000543",
+        "label": "Optic disc pallor"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0025159",
+        "label": "Hypoautofluorescent retinal lesion"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0030629",
+        "label": "Perifoveal ring of hyperautofluorescence"
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0000646",
+        "label": "Amblyopia"
+      },
+      "excluded": true
+    },
+    {
+      "type": {
+        "id": "HP:0000662",
+        "label": "Nyctalopia"
+      },
+      "onset": {
+        "ontologyClass": {
+          "id": "HP:0003621",
+          "label": "Juvenile onset"
+        }
+      }
+    },
+    {
+      "type": {
+        "id": "HP:0000550",
+        "label": "Undetectable electroretinogram"
+      }
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "0zdUQNac8DSHJKTp5gPGFU0P",
+      "progressStatus": "SOLVED",
+      "diagnosis": {
+        "disease": {
+          "id": "OMIM:621548",
+          "label": "Retinitis pigmentosa 101"
+        },
+        "genomicInterpretations": [
+          {
+            "subjectOrBiosampleId": "Family F5230 Patient CIC09152",
+            "interpretationStatus": "CAUSATIVE",
+            "variantInterpretation": {
+              "acmgPathogenicityClassification": "PATHOGENIC",
+              "therapeuticActionability": "UNKNOWN_ACTIONABILITY",
+              "variationDescriptor": {
+                "id": "c1000CtoT_CLN3_NM_001042432v2",
+                "geneContext": {
+                  "valueId": "HGNC:2074",
+                  "symbol": "CLN3"
+                },
+                "expressions": [
+                  {
+                    "syntax": "hgvs.c",
+                    "value": "NM_001042432.2:c.1000C>T"
+                  },
+                  {
+                    "syntax": "hgvs.g",
+                    "value": "NC_000016.10:g.28482161G>A"
+                  },
+                  {
+                    "syntax": "hgvs.p",
+                    "value": "NP_001035897.1:p.(Arg334Cys)"
+                  }
+                ],
+                "vcfRecord": {
+                  "genomeAssembly": "hg38",
+                  "chrom": "chr16",
+                  "pos": 28482161,
+                  "ref": "G",
+                  "alt": "A"
+                },
+                "moleculeContext": "genomic",
+                "allelicState": {
+                  "id": "GENO:0000135",
+                  "label": "heterozygous"
+                }
+              }
+            }
+          },
+          {
+            "subjectOrBiosampleId": "Family F5230 Patient CIC09152",
+            "interpretationStatus": "CAUSATIVE",
+            "variantInterpretation": {
+              "acmgPathogenicityClassification": "PATHOGENIC",
+              "therapeuticActionability": "UNKNOWN_ACTIONABILITY",
+              "variationDescriptor": {
+                "id": "c1213CtoT_CLN3_NM_001042432v2",
+                "geneContext": {
+                  "valueId": "HGNC:2074",
+                  "symbol": "CLN3"
+                },
+                "expressions": [
+                  {
+                    "syntax": "hgvs.c",
+                    "value": "NM_001042432.2:c.1213C>T"
+                  },
+                  {
+                    "syntax": "hgvs.g",
+                    "value": "NC_000016.10:g.28477620G>A"
+                  },
+                  {
+                    "syntax": "hgvs.p",
+                    "value": "NP_001035897.1:p.(Arg405Trp)"
+                  }
+                ],
+                "vcfRecord": {
+                  "genomeAssembly": "hg38",
+                  "chrom": "chr16",
+                  "pos": 28477620,
+                  "ref": "G",
+                  "alt": "A"
+                },
+                "moleculeContext": "genomic",
+                "allelicState": {
+                  "id": "GENO:0000135",
+                  "label": "heterozygous"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "diseases": [
+    {
+      "term": {
+        "id": "OMIM:621548",
+        "label": "Retinitis pigmentosa 101"
+      }
+    }
+  ],
+  "metaData": {
+    "created": "2026-06-09T16:29:04.379472Z",
+    "createdBy": "0000-0002-0736-9199",
+    "resources": [
+      {
+        "id": "hp",
+        "name": "human phenotype ontology",
+        "url": "http://purl.obolibrary.org/obo/hp.owl",
+        "version": "2026-02-16",
+        "namespacePrefix": "HP",
+        "iriPrefix": "http://purl.obolibrary.org/obo/HP_"
+      },
+      {
+        "id": "geno",
+        "name": "Genotype Ontology",
+        "url": "http://purl.obolibrary.org/obo/geno.owl",
+        "version": "2025-07-25",
+        "namespacePrefix": "GENO",
+        "iriPrefix": "http://purl.obolibrary.org/obo/GENO_"
+      },
+      {
+        "id": "omim",
+        "name": "An Online Catalog of Human Genes and Genetic Disorders",
+        "url": "https://www.omim.org",
+        "version": "06/01/25",
+        "namespacePrefix": "OMIM",
+        "iriPrefix": "https://www.omim.org/entry/"
+      },
+      {
+        "id": "hgnc",
+        "name": "HUGO Gene Nomenclature Committee",
+        "url": "https://www.genenames.org",
+        "version": "06/01/25",
+        "namespacePrefix": "HGNC",
+        "iriPrefix": "https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/"
+      }
+    ],
+    "phenopacketSchemaVersion": "2",
+    "externalReferences": [
+      {
+        "id": "PMID:33507216",
+        "description": "Retinal Phenotype of Patients With Isolated Retinal Degeneration Due to CLN3 Pathogenic Variants in a French Retinitis Pigmentosa Cohort."
+      }
+    ]
+  }
+}

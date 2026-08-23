@@ -1,0 +1,1443 @@
+--- PAGE 1 ---
+METHODOLOGY Open Access
+© The Author(s) 2025. Open Access  This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International 
+License, which permits any non-commercial use, sharing, distribution and reproduction in any medium or format, as long as you give appropriate 
+credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if you modified the licensed material. 
+You do not have permission under this licence to share adapted material derived from this article or parts of it. The images or other third party 
+material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material 
+is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted 
+use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit  h t t p : /  / c r e a  t i v e c o  m m o n  s . o r g  / l i c e  n s 
+e s / b  y - n c  - n d / 4 . 0 /.
+Abugabah et al. BioData Mining           (2025) 18:70 
+https://doi.org/10.1186/s13040-025-00487-0
+*Correspondence:
+Ankur Pandey
+ankur.pandey@jaipur.manipal.edu
+1College of Technological 
+Innovation, Zayed University, Abu 
+Dhabi, United Arab Emirates
+2Department of Computer Science 
+and Engineering, Amity School 
+of Engineering and Technology 
+(ASET), Amity University, Mumbai, 
+Maharashtra, India
+3Department of Computer Science 
+& Engineering , University Institute 
+of Technology, Rajiv Gandhi 
+Proudyogiki Vishwavidyalaya (State 
+Technological University), Bhopal, 
+Madhya Pradesh, India
+4Department of Computer 
+Science and Engineering, Manipal 
+University Jaipur, Jaipur, India
+An intelligent healthcare system for rare disease 
+diagnosis utilizing electronic health records 
+based on a knowledge-guided multimodal 
+transformer framework
+Ahed Abugabah1 , Prashant Kumar Shukla2, Piyush Kumar Shukla3 and Ankur Pandey4*
+BioData Mining
+Abstract
+Rare diseases are a common problem with millions of patients globally, but their 
+diagnosis is difficult because of varied clinical presentations, small sample size, and 
+disparate biomedical data sources. Current diagnostic tools are not able to combine 
+multimodal information effectively, which results in a timely or wrong diagnosis. To 
+fill this gap, this paper suggests a smart multimodal healthcare framework integrating 
+electronic health records (EHRs), genomic sequences, and medical imaging to 
+improve the detection of rare diseases. The framework uses Swin Transformer to 
+extract hierarchical visual features in radiographic scans, Med-BERT and Transformer-
+XL to learn semantic and long-term temporal relations in longitudinal electronic 
+health record narratives, and a Graph Neural Network (GNN)-based encoder to learn 
+functional and structural relations in genomic sequences. The alignment of the 
+cross-modal representation is further boosted with a Knowledge-Guided Contrastive 
+Learning (KGCL) mechanism, which takes advantage of rare disease ontologies in 
+Orphanet to improve the interpretability of the model and infusion of knowledge. 
+To achieve strong performance, the Nutcracker Optimization Algorithm (NOA) is 
+proposed to optimize hyperparameters, calibrate attention mechanisms, and enhance 
+multimodal fusion. Experimental results on MIMIC-IV (EHR), ClinVar (genomics), 
+and CheXpert (imaging) datasets show that the proposed framework significantly 
+outperforms the state-of-the-art multimodal baselines in terms of accuracy and 
+robustness of early rare disease diagnosis. This paper presents the opportunity to 
+integrate hierarchical vision transformers, domain-specific language models, graph-
+based genomic encoders, and knowledge-directed optimization to make explainable, 
+accurate, and clinically applicable healthcare decisions in rare disease settings.
+Keywords Rare disease diagnosis, Multimodal healthcare framework, Swin 
+transformer, Graph neural networks (GNNs), Knowledge-Guided contrastive learning 
+(KGCL), Nutcracker optimization algorithm (NOA)
+
+--- PAGE 2 ---
+Page 2 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+Introduction
+Rare diseases are characterized by the fact that they affect a tiny proportion of the popu -
+lation, and this aspect alone affects over 300 million people globally [ 1]. This massive 
+burden notwithstanding, the diagnosis of rare diseases is a protracted and unpredictable 
+process, commonly described as a diagnostic odyssey [ 2]. Patients, on average, spend 
+years of misdiagnosis and untimely treatment, mostly because of the lack of homogene -
+ity of clinical manifestations, the lack of large datasets, and biomedical evidence frag -
+mentation [3]. Conventional tests, which depend on the expertise of the physicians and 
+use of single modalities, often fail to detect rare conditions early and accurately.
+The introduction of Electronic Health Records (EHRs) at scale, genomic sequencing, 
+and medical imaging modalities has presented the opportunity to expedite the process of 
+detecting rare diseases like never before. EHRs provide longitudinal phenotypic trends, 
+genomics has the potential to identify the causative genetic variants, and imaging can 
+demonstrate structural or functional abnormalities that are essential to diagnosis [ 4–6]. 
+However, these modalities are usually addressed separately in current diagnostic pipe -
+lines. The lack of effective integration of multimodal data is also a major impediment 
+that causes incomplete representations and less-than-optimal clinical decision-making 
+[7].
+Recent breakthroughs in deep learning have motivated the effort to fill this gap by 
+providing automated representation learning over a variety of biomedical data. CNNs 
+have long been the mainstay of medical image analysis, but can have difficulty with long-
+range dependency modeling and multimodal integration scalability [ 8]. Transformer 
+architectures have emerged as better alternatives, since these models have self-attention 
+mechanisms, which are good at learning global contextual relationships in both sequen -
+tial and visual data [9]. Transformers are more adaptable, have better feature representa-
+tion, and better ability to incorporate heterogeneous data, which makes them especially 
+suitable for multimodal healthcare applications compared to CNNs [ 10]. This strength 
+is emphasized in the recent work comparing transformer-based and CNN-based mod -
+els on complex biomedical tasks [ 11]. Moreover, recent developments in explainable AI 
+(XAI) in medical imaging have highlighted that transformer-based models not only have 
+better accuracy but also have better interpretability, which is essential to clinical accep -
+tance [12].
+Although these are positive trends, there still exist some gaps that have not been filled. 
+Current multimodal models do not usually take advantage of domain-specific knowl -
+edge sources, such as rare disease ontologies, which can be used to inform model inter -
+pretability and robustness. Second, several methods do not have effective optimization 
+strategies for hyperparameters and attention calibration, which restricts their scalability 
+to a wide range of patients. Lastly, integration frameworks are often built with perfor -
+mance in mind rather than explainability, and this limits their applicability in real-world 
+clinical practice.
+This paper presents a multimodal healthcare system that considers EHRs, genomic 
+data, and medical images in diagnosing rare diseases to overcome these challenges. 
+The framework uses Swin Transformer to obtain hierarchical representations of imag -
+ing data, Med-BERT and Transformer-XL to model EHRs semantically and temporally, 
+and a Graph Neural Network (GNN) to model genomic relations. A Knowledge-Guided 
+Contrastive Learning (KGCL) mechanism uses the Orphanet ontologies to make it more 
+--- PAGE 3 ---
+Page 3 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+interpretable, whereas the Nutcracker Optimization Algorithm (NOA) optimizes hyper-
+parameters, attention calibration, and multimodal fusion to increase diagnostic accuracy 
+and efficiency. The main contributions of this research are as follows:
+  • Proposes a coherent framework that combines EHRs, genomic sequences, and 
+medical imaging in an attempt to achieve a comprehensive picture in the detection of 
+rare diseases.
+  • Comprises Swin Transformer to model imaging, Med-BERT and Transformer-XL 
+to process EHRs, and GNNs to process genomic information to effectively model 
+heterogeneous information.
+  • Orphanet rare disease ontologies are used to achieve better interpretability and align 
+the model output with the domain knowledge.
+  • Uses NOA to optimize hyperparameters, attention calibration, and multimodal 
+fusion to improve the diagnostic performance and efficiency.
+The remainder of the paper is as follows: Sect.  2 is a review of related literature. Sec -
+tion 3 explains the proposed multimodal framework and procedures. Section 4 describes 
+the experimental design and the evaluation criteria. Section  5 reports the results, abla -
+tion studies, and discussion. Section  6 presents the conclusions of the paper and future 
+directions.
+Literature review
+Diagnosis of rare diseases has been addressed in a variety of ways, spanning interdisci -
+plinary clinical methods to the newest deep learning models. Lillig et al. [ 13] reviewed 
+the impact of interdisciplinary case conferences and exome sequencing in the Translate-
+NAMSE project, where one-third of patients obtained a definite diagnosis and one-
+third of exome analyses resulted in genetic findings. The authors noted, though, that an 
+expanded use of whole-genome sequencing and global registries would be required to 
+increase the coverage of diagnosis.
+Transformer-based architecture has attracted attention to multimodal healthcare 
+tasks with the popularity of deep learning. Zhou et al. [ 14] proposed a unified trans -
+former framework, which is a combination of early and late fusion and attention 
+mechanism applied across image data, which demonstrated a significant increase in 
+predicting COVID-19 outcomes and pulmonary diseases compared with image-only 
+models. Although it was successful, the study was hampered by small and homogeneous 
+datasets. Likewise, Jordan et al. [ 15] showed RarePT, a transformer-based model trained 
+on EHR diagnosis codes, which indicated that in large health systems, more than half 
+of the patients were flagged as potentially undiagnosed in 20 of 32 diseases. However, 
+its usefulness was limited by the absence of a straightforward way of validating undiag -
+nosed cases.
+Dwelling upon the problem of recognizing not only known but also unknown diseases, 
+Luo and Yuan [16] have offered a Semantic-guided Rare Disease Diagnosis (SRDD) sys -
+tem, which includes saliency discovery and synthetic sampling strategies. Their approach 
+achieved state-of-the-art classification and was able to identify previously unknown dis -
+eases, albeit it was sensitive to data scarcity. In a similar way, Du and Xingwu [ 17] took 
+advantage of uncertainty in chest X-ray diagnostics by combining the CNN-extracted 
+visual features with a transformer model in label associations. Their framework 
+--- PAGE 4 ---
+Page 4 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+performed better than models with fixed labels, but was impaired by the ambiguity of 
+labels in multi-disease data.
+Other machine learning based methodologies have also made significant contributions 
+in rare disease research. Bahadure et al. [ 18] used classic machine learning methods to 
+predict the severity of rare diseases based on patient records and demonstrated that they 
+have improved in the areas of diagnostic support, but their performance was limited by 
+the small and potentially biased data. In another, larger-scale data-driven study, Moyni -
+han et al. [ 19] used EHRs of more than 1.28 million patients and were able to identify 
+new Fabry disease cases that were undiagnosed as well as several thousand individuals 
+who could be considered to have familial hypercholesterolemia. Nevertheless, despite 
+such findings, there is still a challenge of EHR data mining in terms of data quality and 
+validation. Similarly, Dong et al. [ 20] proposed a weakly supervised, ontology-guided 
+framework of rare disease identification using clinical notes, with a precision of concept 
+linking that is improved by up to 50%, due to imperfect mapping between ontologies 
+(UMLS and ORDO); there was a lack of generalizability.
+Transformer-based multimodal learning has received more and more attention in 
+recent works. Li et al. [ 21] suggested a multimodal transformer with longitudinal inte -
+gration of imaging data with clinical signatures to classify pulmonary nodules, which 
+showed significant increases in AUC, but had issues with irregularly sampled modalities. 
+Niu et al. [22] moved this field forward with EHR-KnowGen, which used large language 
+models and soft prompts to achieve unified multimodal learning and recorded better 
+performance in diagnosis generation, but multimodal integration problems remained. 
+In a similar vein, Chen et al. [ 23] proposed a disentangle-and-calibrate framework with 
+gradient guidance, which performed state-of-the-art on common and rare disease diag -
+nosis, but required large, labeled datasets.
+Complementary views are provided by systematic reviews and expert guidelines. 
+According to Gbole and Asiamah [ 24], CNNs have demonstrated high accuracy in 
+rare disease imaging, yet they lack proper generalizability because they use small and 
+closed datasets with no external validation. Van Karnebeek et al. [ 25] highlighted the 
+promise of genomics, epigenomics, and multi-omics technologies and the importance 
+of global collaboration and the equitable access of diagnostic innovations to patients, 
+noting that more than half of rare diseases remain undiagnosed. Lastly, PhenoBrain [ 26] 
+is an NLP pipeline that uses BERT to extract phenotypes in EHRs and is more accurate 
+than human experts in differentiating rare diseases with a top-3 recall of 0.613. However, 
+its analysis was in a simulated workflow and not a real-world workflow, and the lack of 
+architectural transparency compromised reproducibility. Table 1 provides an overview 
+of the literature review.
+Collectively, the literature shows that there is considerable advancement in EHR 
+mining, genomic sequencing, medical imaging, and transformer-based multimodal 
+fusion to diagnose rare diseases. Nevertheless, there are severe gaps. To begin with, the 
+majority of frameworks continue to treat data sources in silos or use minimal integra -
+tion strategies, which limit diagnostic robustness. Second, previous studies seldom use 
+domain knowledge that is available in rare disease ontologies, and this domain knowl -
+edge may increase the interpretation and clinical credibility. Third, hyperparameter and 
+attention-mechanism optimization in multimodal fusion is an under-explored area, 
+--- PAGE 5 ---
+Page 5 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+which contributes to inefficiencies in training and deployment. Lastly, explainability is 
+an urgent obstacle, since the majority of models are black boxes, which impede clinical 
+uptake.
+This paper closes these gaps by suggesting a knowledge-informed multimodal frame -
+work, where EHRs, genomic sequences, and medical imaging are combined through 
+transformers and GNNs, and augmented with KGCL on Orphanet ontologies. It also 
+proposes the NOA to tune attention and optimize fusion to enhance diagnostic accu -
+racy, interpretability, and efficiency.
+Method
+Modality encoders
+Medical imaging
+Swin Transformer [27] architecture is constructed with Layer Normalization (LN), Win-
+dow-based Multi-Head Self-Attention (W-MSA), Shifted Window-based Multi-Head 
+Self-Attention (SW-MSA), and a two-layer Multi-Layer Perceptron (MLP) with GELU 
+nonlinearity. It is shown in Figs. 1 and 2.
+Layer Normalization makes training more stable by decreasing overfitting and improv-
+ing convergence. The W-MSA method allows the model to concentrate on local patterns 
+in non-overlapping windows, and SW-MSA adds cross-window dependences by moving 
+partitions by half their size. The MLP module, which is composed of two fully connected 
+Table 1 Summary of literature review
+Author (Year) Focus / Method Key Results Limitations
+Rillig et al. (2022) 
+[13]
+Interdisciplinary case confer-
+ences, exome sequencing
+30% definitive diagnosis; 32% 
+genetic findings
+Need whole-genome 
+sequencing; lack of 
+registry
+Zhou et al. (2023) 
+[14]
+Transformer-based multimodal 
+fusion (image + embeddings)
+Outperformed image-only; 
+improved COVID-19/pulmo-
+nary predictions
+Small, homogeneous 
+datasets
+Jordan et al. (2023) 
+[15]
+RarePT transformer on EHR 
+diagnosis codes
+> 50% undiagnosed predic-
+tions for 20/32 diseases
+Cannot directly confirm 
+undiagnosed cases
+Luo & Yuan (2023) 
+[16]
+Semantic-guided saliency + syn-
+thetic sampling (SRDD)
+State-of-the-art performance; 
+detects unknown diseases
+Data scarcity, lim-
+ited unknown disease 
+detection
+Du & Xingwu 
+(2023) [17]
+CNN + Transformer for chest 
+X-ray with uncertain labels
+Outperformed definite-label 
+models
+Vague annotations 
+hinder performance
+Bahadure et al. 
+(2023) [18]
+ML algorithms on patient 
+records
+Improved diagnosis/treat-
+ment support
+Limited data, biased 
+predictions
+Moynihan et al. 
+(2023) [19]
+EHR data mining of 1.28 M 
+patients
+Identified Fabry & FH cases; 
+>12k individuals flagged
+EHR data quality 
+challenges
+Dong et al. (2023) 
+[20]
+Ontology-driven, weakly super-
+vised NLP
++ 30–50% precision in text-to-
+UMLS linking
+Imperfect ontology 
+matching
+Li et al. (2023) [21] Longitudinal multimodal trans-
+former (EHR + imaging)
+Significant AUC gains in SPN 
+classification
+Irregular sampling of 
+modalities
+Niu et al. (2024) 
+[22]
+EHR-KnowGen with soft 
+prompts & LLMs
+Superior multimodal diagno-
+sis generation
+Integration across mo-
+dalities remains hard
+Chen et al. (2024) 
+[23]
+Gradient-guided disentangle & 
+calibration (DCGG)
+State-of-the-art diagnosis, 
+rare + common diseases
+Needs large, labeled 
+data
+Mgbole & Asiamah 
+(2024) [24]
+Systematic review of CNNs for 
+rare disease imaging
+High accuracy in classification Small datasets, no 
+external validation
+Van Karnebeek et 
+al. (2024) [25]
+Multi-omics, genomics, 
+bioinformatics
+Innovative diagnostics, equi-
+table access stressed
+50% remain undiag-
+nosed; global inequity
+Mao et al. (2025) 
+[26]
+PhenoBrain BERT-NLP pheno-
+type extraction
+Outperformed experts; top-3 
+recall = 0.613
+Simulated setting; poor 
+reproducibility
+--- PAGE 6 ---
+Page 6 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+layers with GELU activation, guarantees nonlinear feature transformation. Residual con-
+nections are injected everywhere to maintain gradient flow and make training more 
+stable.
+The forward propagation from level 𝑙 to level 𝑙+1 is formally expressed as:
+ˆzl = MSA (LN (zl−1)) + zl−1 (1)
+zl = M LP (LN (ˆzl)) + ˆzl (2)
+ˆzl+1 = SW − MSA (LN (zl)) + zl (3)
+Fig. 2 Two successive Swin Transformer blocks
+ 
+Fig. 1 Architecture of Swin Transformer
+ 
+--- PAGE 7 ---
+Page 7 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+zl+1 = M LP (LN (ˆzl+1)) + ˆzl+1 (4)
+where ˆzl and ˆzl+1 denote the outputs of the W-MSA and SW-MSA modules, respec -
+tively, while zl and zl+1 represent the post-MLP outputs.
+Although these benefits are present, Layer Normalization can skew the local feature 
+representations of CNN backbones. T o overcome this, the Swin Transformer block is 
+adapted to remove normalization layers and keep the residual connections so that it can 
+be used with CNN backbones. This alteration minimizes computational cost and retains 
+real-time performance, and also retains the advantages of window-based self-attention.
+The modified forward process is given as:
+ˆzl = W − MSA (zl−1)+z l−1 (5)
+zl = M LP (ˆzl)+ ˆzl (6)
+ˆzl+1 = SW − MSA (zl)+z l (7)
+zl+1 = M LP (ˆzl+1)+ ˆzl+1 (8)
+This change will make the Swin Transformer easily applicable to CNN-based architec -
+ture in medical imaging processes, providing a trade-off between the computational cost 
+and representation performance.
+EHR narratives
+Med-BERT architecture In this work, the Med-BERT [ 28] architecture was used to 
+process structured electronic health records (EHRs) as an extension of the transformer-
+based design of the original BERT model. In contrast to BERT, which works on a one-
+dimensional sequence of words, Med-BERT processes the EHR as a sequence of patient 
+visits that are represented by diagnosis codes. Med-BERT combines three different 
+embedding layers to capture the semantics, the sequential, and the temporal embedding 
+of the data in order to achieve effective representation. Diagnosis codes are mapped into 
+low-dimensional vector representations to represent clinical entities, serialization rep -
+resentations are integrated to capture the relative order and contextual priority of codes 
+within a single visit, and visit representations introduce temporal distinctions across mul-
+tiple encounters. The model integrates these embeddings to produce representations of 
+input that are processed by bidirectional transformer encoders, which allows the model 
+to identify complex correlations within multilayered and multi-relational EHR structures. 
+Med-BERT achieves this by creating a deep contextual representation of patient histories 
+through pretraining techniques, including masked code prediction and visit classifica -
+tion, resulting in strong downstream clinical prediction performance.
+Transformer-XL architecture Transformer-XL [29] goes further than the vanilla trans-
+former to include a recurrence mechanism that allows modeling long-term dependencies, 
+which is essential in sequential clinical data. It does not process each sequence separately, 
+but instead it reuses the hidden states of earlier segments with a memory mechanism.
+Formally, Transformer-XL redefines the equation that generates the values 𝑄, 𝐾, and 𝑉 
+of the attention mechanism as follows:
+Q = WQx (9)
+K, V = WK,V [SG (xt−1) ∗ x] (10)
+--- PAGE 8 ---
+Page 8 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+where [ ∗] denotes concatenation, SG(· ) represents the stop-gradient function, and 
+xt−1 refers to the input to the attention mechanism from the previous sequence.
+The self-attention mechanism then follows the standard formulation:
+Attention (Q, K, V )= sof tmax
+( QKT
+√dk
+)
+V  (11)
+This architecture enables the model to keep information outside the input window of 
+a fixed length, which ensures continuity of the sequences. The structure of the Trans -
+former-XL model is shown in Fig.  3. The Transformer-XL layer is only different in the 
+memory-specific self-attention mechanism, otherwise being the same as a standard 
+transformer layer. The self-attention is normalizing using layer normalization and a 
+residual connection, then followed by a feed-forward network (FFN) to ensure that it is 
+stable and expressive in modeling.
+Genomic sequences
+This work uses a graph neural network (GNN)-based [ 30] encoder to capture structural 
+and functional relationships of genomic data. Unlike sequential text or imaging data, 
+genomic sequences have complicated interactions, including gene-gene regulatory net -
+works and protein-protein interactions that are naturally modeled as graph structures. 
+In this context, genomic entities (e.g., genes or proteins) are represented as nodes, and 
+the biological interactions (e.g., co-expression, regulation, or structural similarity) as 
+Fig. 3 Structure of the Transformer-XL
+ 
+--- PAGE 9 ---
+Page 9 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+edges. Each node is initialized with a feature vector that encodes biological features, and 
+the GNN then refines these representations by aggregating information with neighbor -
+ing nodes. Figure 4 shows the structure of the GNN.
+Formally, for a node 𝑣 with feature representation h(l)
+v  at layer 𝑙, the neighborhood 
+aggregation process is expressed as:
+h(l+1)
+v = σ
+(
+W (l) · AGG
+({
+h(l)
+v : u ∈ N (v)
+}
+∪
+{
+h(l+1)
+v
+}))
+ (12)
+where 𝑁 (𝑣) denotes the set of neighbors of 𝑣, AGG(· ) is an aggregation function such 
+as mean, sum, or attention-based pooling, W (l) represents trainable weights, and 𝜎 (⋅) 
+is a nonlinear activation function. This formulation ensures that each genomic feature 
+vector evolves by incorporating contextual biological information from its neighbors, 
+thereby capturing both local dependencies and higher-order functional relationships.
+To additionally underline the importance of biological hierarchy, graph attention net -
+works (GATs) may be used, with the contribution of each neighbor being modulated by 
+a learned attention coefficient. Here, the attention mechanism calculates normalized 
+weights, α vu , of each edge, which is defined as:
+α vu = exp
+(
+Leaky ReLU
+(
+aT [Wh v ∥ Wh v ]
+))
+∑
+k∈ N (v)exp (Leaky ReLU (aT [Wh v ∥ Wh k]))  (13)
+where ∥ denotes concatenation, and 𝑎 is a trainable weight vector. This enables the model 
+to focus on biologically significant interactions and inhibits insignificant connections.
+This hierarchical aggregation and attention-guided representation learning enables the 
+GNN-based encoder to represent genomic sequences with the embeddings that retain 
+both structural connectivity and functional similarity. Such embeddings are a solid basis 
+in downstream predictive tasks, including disease-gene association, drug response pre -
+diction, and precision medicine applications.
+Knowledge-guided contrastive learning (KGCL)
+To effectively unify heterogeneous modalities-medical imaging, EHR narratives, and 
+genomic sequences- this framework uses a Knowledge-Guided Contrastive Learning 
+(KGCL) [ 31] paradigm. In contrast to data-driven contrastive methods, KGCL uses 
+domain knowledge, e.g., medical ontologies (e.g., UMLS, Gene Ontology) and curated 
+relationships, to provide structure to the alignment of latent representations across 
+Fig. 4 Structure of graph neural network
+ 
+--- PAGE 10 ---
+Page 10 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+modalities. The aim is to provide that embeddings inferred based on various modalities 
+not only reflect statistical co-occurrence, but also are consistent with known biomedical 
+semantics.
+In the standard contrastive learning setting, given a pair of modalities xi and xj , their 
+encoded representations zi = f (xi) and zj = g (xj ) are optimized to maximize agree -
+ment if they correspond to the same clinical entity, and minimized otherwise. This is 
+formalized through the InfoNCE objective:
+LCL = −
+∑
+(i,j)∈ P log exp (sim (zi,z j ) /τ )∑
+k∈ N (i)exp (sim (zi,z k) /τ )  (14)
+where 𝑃 denotes positive modality pairs, N (i) is the set of all negative samples for 
+anchor zi, sim (· ) is a similarity function (e.g., cosine similarity), and 𝜏 is a temperature 
+parameter.
+KGCL takes the preceding formulation and introduces knowledge-based constraints 
+into the contrastive loss. In particular, the domain knowledge graphs G =( V, E), where 
+nodes 𝑉 are medical entities (e.g., diseases, symptoms, genes), and edges 𝐸 are seman -
+tic or functional relationships, are utilized as a source of an extra supervision signal. A 
+knowledge-guided similarity function simK (· ) is proposed, where the contrastive pairs 
+are weighted by their similarity in the knowledge graph. The amended purpose is as 
+under:
+LKGCL = −
+∑
+(i,j)∈ P wij · log exp (sim (zi,z j ) /τ )∑
+k∈ N (i)exp (sim (zi,z k) /τ )  (15)
+where wij = fK (ei,j ) is a weight function based on the knowledge graph that gives 
+greater weight to pairs of objects linked by clinically meaningful relations and less other-
+wise. As an example, the tumor MRI embedding and the corresponding genomic muta -
+tion embedding would be highly weighted when the gene mutation is known to cause 
+tumor progression.
+Nutcracker optimization algorithm
+The Nutcracker Optimization Algorithm (NOA) [32] is a recent metaheuristic that takes 
+the foraging, caching, and recovery behavior of nutcrackers in the wild. More specifi -
+cally, NOA resembles the way in which nutcrackers gather seeds in warmer seasons, hide 
+them in several caches, and then reclaim them in the winter and spring. These biological 
+mechanisms are codified into two major strategies: foraging and storage (exploration-
+exploitation tradeoff) and cache-search and recovery (memory-guided optimization).
+Foraging and Storage Strategy.
+The foraging strategy reflects the exploratory behavior of nutcrackers searching for 
+food sources. At iteration 𝑡, the position of the 𝑖-th nutcracker is updated according to:
+Xt+1
+i =
+
+
+
+Xt
+i,j{
+Xt
+m + γ · (Xt
+A − Xt
+B )+µ ·
+(
+r2 · Uj − Lj
+)
+,
+Xt
+C + µ · (Xt
+A − Xt
+B )+µ · (r1 <δ ) · (r2Uj − Lj )
+if t ≤ Tmax/2
+therwise
+if τ 1 <τ 2
+therwise  (16)
+Here, Xt
+i,j  is the 𝑗-th dimension of solution 𝑖 at time 𝑡; Uj  and Lj  are upper and lower 
+bounds; Xt
+A, Xt
+B , Xt
+C  are randomly selected peers; 𝛾 is a Lévy-distributed random 
+number; Xt
+m is the population mean, and 𝜇 is a dynamic coefficient given by:
+--- PAGE 11 ---
+Page 11 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+µ =
+{ τ 3
+τ 4
+τ 5
+r1 <r 2
+r2 <r 3
+r3 <r 4
+ (17)
+Once resources are located, the storage phase models exploitation by moving solutions 
+closer to the best-known optimum:
+−→X
+t+1(new)
+i =
+
+
+
+−→X
+t
+i + µ ·
+(−→X
+t
+best − −→X
+t
+i
+)
+·| λ | + r1 ·
+(−→X
+t
+A − −→X
+t
+B
+)
+−→X
+t
+best + µ ·
+(−→X
+t
+A − −→X
+t
+B
+)
+,
+−→X
+t
+best · l,
+r1 <r 2
+r2 <r 3
+otherwise  (18)
+where 𝜆 is a Lévy-distributed factor and 𝑙 decreases linearly from 1 to 0. The tradeoff  
+between exploration (Eq. 16) and exploitation (Eq. 18) is dynamically controlled by:
+−→X
+t+1
+i =
+{
+Eq. (16) ,
+Eq. (18) ,
+if φ < P a1
+otherwise  (19)
+where Pa1 is a linearly decreasing probability.
+Cache-search and recovery strategy
+To take into account the spatial memory dependence of nutcrackers, NOA uses the ref -
+erence points (RPs) as memory cues to caches. At iteration 𝑡, the 𝑖-th solution, two RPs 
+are produced as:
+RP s =
+
+
+−→RP t
+1,1
+−→RP t
+1,2
+...
+...−→RP t
+i,1
+...−→RP t
+N,1
+...
+−→RP t
+i,2
+...−→RP t
+N,1
+...
+
+
+ (20)
+−→RP
+t
+i,1 =
+
+
+
+−→X
+t
+i + α cos (θ )
+((−→X
+t
+A − −→X
+t
+B
+))
++ α RP,
+−→X
+t
+i + α cos (θ )
+((−→X
+t
+A − −→X
+t
+B
+))
+,
+θ = n
+2
+otherwise  (21)
+−→RP
+t
+i,2 =
+
+
+
+−→X
+t
+i +
+(
+α cos (θ ) ·
+((−→U − −→L
+)
+· τ 3 + −→U
+)
++ α · −→RP
+)
+· −→U 2
+−→X
+t
+i + α cos (θ ) ·
+((−→U − −→L
+)
+· τ 3 + −→U
+)
+· −→U 2,
+θ = n
+2
+otherwise  (22)
+with 𝛼 α dynamically scheduled as:
+α =
+
+
+
+(
+1 − t
+Tmax
+)2 t
+Tmax
+,
+(
+t
+Tmax
+) 2
+t
+,
+if r 1 >r 2
+otherwise  (23)
+The recovery phase updates a solution by recalling its cached RP:
+Xt+1
+ij =
+{ Xt
+ij
+Xt
+ij + r1
+(
+Xt
+best,j − Xt
+ij
+)
++ r2
+(
+RP t
+i,1 − Xt
+Cj
+) τ 3 <τ 4
+otherwise  (24)
+--- PAGE 12 ---
+Page 12 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+If the first RP fails, recovery proceeds with the second RP:
+Xt+1
+ij =
+{ Xt
+ij
+Xt
+ij + r1
+(
+Xt
+best,j − Xt
+ij
+)
++ r2
+(
+RP t
+i,2 − Xt
+Cj
+) τ 5 <τ 6
+otherwise  (25)
+The algorithm stochastically switches between Eq. ( 24) and Eq. (25) to simulate memory 
+uncertainty:
+−→X
+t+1
+i =
+{
+Eq. (24) ,
+Eq. (25) ,
+τ 7 <τ 8
+otherwise  (26)
+The balance between cache-search and recovery is finally controlled by:
+−→X
+t+1
+i =
+{
+Eq. (25) ,
+Eq. (26) ,
+if φ < P a2
+otherwise  (27)
+with the final acceptance rule ensuring elitism:
+−→X
+t+1
+i =
+{ −→X
+t+1
+i
+−→X
+t
+i
+if f
+(−→X
+t+1
+i
+)
+<f
+(−→X
+t
+i
+)
+otherwise
+ (28)
+Under this framework, NOA is modified to optimize the hyperparameters of the mul -
+timodal encoders, tune attention weight in cross-modal fusion, and fine-tune the 
+parameters of KGCL. Its exploration (diverse parameter sampling) and exploitation 
+(memory-guided refinement) trade-off leads to robust convergence and decreased vul -
+nerability to local optima.
+Experimental setup
+Datasets
+MIMIC-IV
+The MIMIC-IV [ 33] is a large-scale, de-identified database that offers comprehensive 
+electronic health records (EHRs) of the patients who were admitted to the Beth Israel 
+Deaconess Medical Center in Boston, Massachusetts. In particular, it contains the data 
+of more than 65,000 patients who have been admitted to intensive care units (ICUs) 
+and more than 200,000 patients who have been admitted to the emergency department. 
+MIMIC-IV builds upon MIMIC-III, but includes more modern data and a modular 
+design to improve data provenance and enable independent and integrated use of het -
+erogeneous data. It includes structured clinical data, physician notes, lab reports, and 
+medication histories, providing a longitudinal view of patient trajectories. This tempo -
+ral richness renders it especially appropriate to the examination of disease progression, 
+response to treatment, and outcome prediction, which are key areas in the detection of 
+rare diseases.
+MIMIC-IV is a rich source of demographic, clinical, and outcome data that will allow 
+multimodal analysis when paired with imaging, genomic, and ontological data. Table  2 
+shows the demographics and outcome summary of ICU patients in MIMIC-IV. The sta -
+tistics reflect the heterogeneity of patient populations, such as age distribution, gender 
+representation, insurance coverage, length of stay, and in-hospital and one-year mortal -
+ity rates. Such extensive demographic coverage will allow predictive models trained on 
+--- PAGE 13 ---
+Page 13 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+MIMIC-IV to capture a broad scope of clinical variability, improving the generalizability 
+of these models.
+ClinVar
+ClinVar [34] is a free, publicly accessible resource that gives detailed information about 
+human genetic variations, their categories, and their relationships with diseases and 
+drug responses. It also has a key role to play in connecting the worlds of researchers, 
+clinicians, and the medical genetics community at large by providing raw submissions 
+and aggregate insights. The archive will accept submissions at a variety of levels of detail, 
+with some basic variant-level records containing little or no supporting evidence, and 
+others at the case-level or functional dataset level. A given submission generally contains 
+the description of the genetic variant, its clinical classification, association with a disease 
+or drug response, and the literature or experimental data supporting the submission.
+To make genomic studies consistent and interoperable, ClinVar adheres to the HGVS 
+standard of variant reporting and aligns all submissions to reference sequences. Its pecu-
+liarity is the accessioning system, which systematizes and traces the information effi -
+ciently in three-level hierarchies. Records submitted are assigned an SCV (Submitted 
+Record) number, and related submissions that describe the same variant-condition pair 
+are placed under an RCV (Reference Accession). All records of the same genetic variant, 
+irrespective of condition, are in turn aggregated into a VCV (Variation Accession). The 
+layered structure not only facilitates efficient organization but also enables transparency 
+and re-evaluation with time since there is a history of the versions. Table  3 shows the 
+overview of clinvar dataset metrics.
+Another important feature of ClinVar is its review status, which explains the level of 
+consensus on which variant was classified and whether there are conflicting interpreta -
+tions of the variant or whether it has been reviewed by a panel of experts. This aids in the 
+determination of the reliability and clinical significance of the data by the user. ClinVar 
+also works closely with other such initiatives as ClinGen, which reinforces its position as 
+a source of evidence-based variant interpretation and standardization in clinical genom -
+ics. By providing a place to accommodate both agreement and contradictory statements, 
+ClinVar will enable refinement of genomic knowledge over time and help achieve preci -
+sion medicine.
+Table 2 Demographics of ICU and hospital admissions in MIMIC-IV
+Characteristic Hospital Admissions ICU Admissions
+Number of stays 431,231 73,181
+Unique patients 180,733 50,920
+Age, mean (SD) 58.8 (19.2) 64.7 (16.9)
+Female, n (%) 224,990 (52.2%) 32,363 (44.2%)
+Insurance, n (%)
+– Medicaid 41,330 (9.6%) 5,528 (7.6%)
+– Medicare 160,560 (37.2%) 33,091 (45.2%)
+– Other 229,341 (53.2%) 34,562 (47.2%)
+Hospital length of stay, mean (SD) 4.5 (6.6) 11.0 (13.3)
+In-hospital mortality, n (%) 8,974 (2.1%) 8,519 (11.6%)
+One-year mortality, n (%) 106,218 (24.6%) 28,274 (38.6%)
+--- PAGE 14 ---
+Page 14 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+CheXpert
+CheXpert [35] is one of the largest publicly available chest X-ray datasets that is designed 
+to advance automated medical image interpretation. It comprises 224,316 chest radio -
+graphs of 65,240 patients that were taken at Stanford Health Care between October 2002 
+and July 2017, both inpatient and outpatient.
+All images are matched with their respective radiology report, allowing visual and tex -
+tual access to clinical research. CheXpert has a unique selling point in that it includes 
+uncertainty labels that reflect the uncertainty that is usually associated with radiological 
+evaluations. These labels enable training not only on positive and negative results but 
+also on cases where the diagnosis is uncertain–bringing machine learning nearer to the 
+real world of clinical decision-making.
+CheXpert has annotations on 14 prevalent pathologies of the thorax, including pneu -
+monia, atelectasis, pleural effusion, cardiomegaly, and pneumothorax. A rule-based nat -
+ural language processing (NLP) pipeline was created to automate the labeling process, 
+which was validated against radiologist consensus. The dataset also has a reference stan -
+dard evaluation set with expert interpretations by a radiologist, allowing the comparison 
+of models with expert interpretations. Figure  5 shows the chest x-ray images from 65k 
+patients in frontal and lateral views.
+Orphanet ontology
+Orphanet [36] is a multinational comprehensive knowledge base specializing in rare dis -
+eases and orphan drugs, maintained by a European consortium of experts. Its ontology 
+gives a hierarchical classification scheme of over 6,000 rare diseases, with their pheno -
+typic characteristics, prevalence, modes of inheritance, and related genes. In contrast 
+to general biomedical ontologies, Orphanet specifically addresses uncommon and rare 
+diseases, and thus is especially valuable to this study. The distribution of disorders by 
+Orphanet phenotype type (Table 4) shows an inherent lack of balance, with some cat -
+egories, e.g., biological anomaly and disease, being well represented, but others, e.g., 
+etiological subtype and morphological anomaly, occurring less frequently. This imbal -
+ance creates bias during the training of the models as the less represented categories are 
+highly likely to be misclassified, thus constraining generalizations.
+Table 3 Overview of clinvar dataset metrics
+Metric Description Value
+Total submitter records Total records submitted to ClinVar 5,029,205
+Variants with classifications Variants that have classification annotations 4,995,769
+Germline classifications Classified germline variants 4,994,968
+Unique variation records Distinct variant entries 3,307,606
+Unique records with classifications Unique variants with classification data 3,295,758
+Unique records (germline) Unique classified germline variants 3,295,361
+Unique records (somatic) Unique classified somatic variants 783
+Unique records with assertion criteria Unique variants backed by assertion criteria 3,163,610
+Practice-guideline validated records (4 stars) Variants validated by professional guidelines 663
+Expert panel reviewed records (3 stars) Variants reviewed by expert panels 19,018
+Multiple submitters, no conflict (2 stars) Records with concordant classification 537,936
+One-star records (1 star) Records with basic assertion criteria 2,469,612
+Records with conflicting classifications Variants with inconsistent interpretations 136,781
+Genes with variants in a single gene Number of genes with gene-specific variants 17,559
+Genes with multi-gene spanning variants Number of genes with variants spanning multiple 92,634
+--- PAGE 15 ---
+Page 15 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+The ontology categorizes diseases into classes and subclasses, making it possible to 
+reason based on the knowledge. Every one of them is annotated with standard identi -
+fiers (OrphaCodes), cross-references to other resources (OMIM, ICD-10, MeSH, and 
+SNOMED CT), and links to clinical guidelines and registries. Such structured represen -
+tation can support semantic integration of heterogeneous modalities, including imaging, 
+genomics, and electronic health records.
+Preprocessing
+Text normalization
+EHRs and radiology reports were converted to textual data and were rigorously normal -
+ized to achieve semantic consistency in heterogeneous clinical narratives. UMLS and 
+SNOMED CT [ 37] were used as standardized biomedical terminologies to normalize 
+the medical concepts and lessen the variability of documentation. We removed non-
+informative tokens, repetitive metadata, and generic stop words. More emphasis was put 
+on negation detection (e.g., pneumonia vs. no pneumonia) in order to maintain clini -
+cal meaning. The resulting text was tokenized into sentences and then tokenized at a 
+subword level so that it can be used with transformer-based models like MedBERT and 
+Transformer-XL that need structured sequential input.
+Imaging augmentation
+The preprocessing of chest radiographs obtained in the CheXpert dataset standardized 
+the visual inputs to meet the needs of deep learning. All images were resized to 224 224 
+Table 4 Orphanet phenome-types assigned to rare disorders
+Phenome type Example disorder
+Biological anomaly Methylmalonic aciduria due to transcobalamin receptor defect
+Clinical subtype Adult Krabbe disease
+Clinical syndrome Meigs syndrome
+Etiological subtype African tick typhus
+Group of disorders Rare bone disease
+Histopathological subtype Ependymoma
+Disease Acatalasemia
+Malformation syndrome Ackerman syndrome
+Morphological anomaly Anodontia
+Fig. 5 Chexpert dataset of chest X-ray images
+ 
+--- PAGE 16 ---
+Page 16 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+pixels to comply with the input size of Swin Transformer. Contrast-Limited Adaptive 
+Histogram Equalization (CLAHE) [38] was used to bring out subtle radiological patterns 
+to enhance visibility of fine-grained abnormalities, which are critical in rare disease sit -
+uations. To enhance model robustness and mitigate overfitting, a set of augmentation 
+techniques was used, including random rotations, horizontal flips, noise addition, and 
+intensity normalization. Lastly, the distributions of pixel intensities were normalized 
+across the dataset to make the training and inference consistent.
+Genomic graph construction
+Genomic data preprocessing concentrated on building heterogeneous graph representa -
+tions to represent the complexity of gene-variant-disease relationships. Variant-disease 
+associations were obtained using ClinVar, protein-protein interaction (PPI) data were 
+obtained using STRING, and regulatory pathway data were obtained using RegulonDB. 
+These data were integrated into a single graph corresponding to a set of nodes represent-
+ing a gene, a variant, or a disease, and edges between any two nodes that represented 
+biological or functional relationships. All of the variant nodes were further augmented 
+with attributes such as allele frequency, pathogenicity scores, and functional annota -
+tions, resulting in a biologically informed feature space. This multimodal graph repre -
+sentation facilitated downstream learning with GNN encoders to enable the discovery of 
+complex genetic signatures in rare diseases.
+Training configurations
+All modality-specific encoders were trained with standard configuration, and the unified 
+fusion framework was also trained with standardized settings to enable fair compari -
+sons across experiments. All the models were trained in PyTorch 2.0 with CUDA accel -
+eration on NVIDIA RTX 3060 GPUs with 12GB memory. Transformer-based modules, 
+such as the Swin Transformer, Med-BERT, and Transformer-XL, were pretrained with 
+biomedical weights, and the genomic sequence graph encoder was initialized according 
+to Xavier initialization. Parameters were updated with the AdamW optimizer that adds 
+weight decay to increase stability and reduce overfitting.
+Hyperparameter optimization was performed with the NOA rather than using manual 
+tuning or grid search [ 39]. Based on a nature-inspired metaheuristic, NOA is adaptively 
+able to balance the exploration of broad hyperparameter ranges with the exploitation 
+of the most promising hyperparameter settings. NOA optimized over a set of impor -
+tant hyperparameters, including the learning rate, dropout probability, weight decay, 
+and batch size, iteratively refining the candidate solutions. The training process has con -
+verted to a learning rate of about 2.3 × 10−4, dropout probability of 0.25, weight decay 
+factor adjusted in the range of 10−6 to 10−3, and a batch size of 64. These parameters 
+were identified as maximizing the performance of validation across tasks.
+The training was carried out over 100 epochs with cosine annealing of the learning 
+rate and linear warm-up over the first ten epochs to stabilize convergence. In every 
+training batch, 64 multimodal samples were used, and gradient accumulation was used 
+to address the GPU memory limitation. Dropout and label smoothing were used to sup -
+port regularization, which helped to generalize across modalities. Loss functions were 
+task-specific, where weighted cross-entropy was used on EHR and imaging classifica -
+tion, graph-based contrastive loss on node classification on genomic learning, and a 
+--- PAGE 17 ---
+Page 17 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+knowledge-guided contrastive objective incorporated into the multimodal fusion stage. 
+Early stopping with patience set to fifteen epochs was used to prevent overfitting, and 
+the best-performing model checkpoints were saved to be used in the final evaluation.
+Hardware and software tools
+To enhance reproducibility and opaqueness, the experiments have been done on a regu -
+lar workstation configuration as opposed to high-performance clusters which as shown 
+in Table 5. This option underscores the practicality of applying the suggested framework 
+in the most widely available computing settings.
+Evaluation metrics
+The proposed KGCL-based framework was tested thoroughly in three perspectives: pre -
+dictive accuracy, temporal learning dynamics, and modality fairness.
+To evaluate predictive performance, standard performance metrics were used, such as 
+accuracy, precision, recall, F1-score, and Area Under the Receiver Operating Charac -
+teristic Curve (AUC). Accuracy measures the percentage of correctly labelled instances 
+of all classes, whereas AUC measures the accuracy of the discrimination between the 
+positive and negative cases, which gives an idea of the overall reliability of the diagnostic. 
+Accuracy, precision, recall, and F1-score calculate the accuracy of the system in recog -
+nizing the true positives and minimizing false positives and false negatives, and are for -
+mally written as:
+Accuracy = TP + TN
+TP + TN + FP + FN  (29)
+P recision = TP
+TP + FP  (30)
+Recall = TP
+TP + FN  (31)
+F 1 Score =2 · P recision × Recall
+P recision + Recall  (32)
+Table 5 Hardware and software tools used in the proposed framework
+Category Specification / Tools
+Hardware
+CPU Intel Core i7, 3.4 GHz (8 cores)
+GPU NVIDIA RTX 3060, 12 GB memory
+RAM 32 GB DDR4
+Storage 1 TB SSD
+Software
+Operating System Ubuntu 22.04 LTS
+Deep Learning Framework PyTorch 2.0 with CUDA 11.8
+NLP Models Hugging Face Transformers (Med-BERT, Transformer-XL)
+Genomic Models PyTorch Geometric for Graph Neural Networks (GNNs)
+Medical Imaging MONAI for preprocessing and Swin Transformer integration
+Preprocessing NumPy, Pandas, scikit-learn
+Visualization Matplotlib, Seaborn
+Environment Docker for containerization and reproducibility
+--- PAGE 18 ---
+Page 18 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+Where TP, TP, FP, and FN indicate true positives, true negatives, false positives, and 
+false negatives, respectively. All of these measures will determine the predictive validity 
+of the model on multimodal sources, such as imaging, EHR, and genomic data.
+In addition to static accuracy, convergence stability was measured by the temporal 
+dynamics of learning. The training loss reduction ratio was calculated as:
+∆L t = Lt − Lt−1 (33)
+where Lt is the training loss at epoch 𝑡. A small and consistent variance in ∆L t indi-
+cates stable and smooth convergence.
+T o evaluate generalization ability, the generalization gap was computed:
+G = |Lval − Ltrain | (34)
+A reduced gap of generalization means that the model can be better transferred to cases 
+beyond the training data, which demonstrates its robustness to unseen cases.
+Lastly, for the fairness of the modalities, the Modality Contribution Ratio (MCR) was 
+added to the model, where no one modality is favored more than the other during the 
+optimization process. For modality 𝑚 m, MCR is defined as:
+MCR m = lm
+∑ M
+i=1li
+ (35)
+where lm is the loss contribution of modality 𝑚, and 𝑀 is the total number of modali -
+ties. A balanced MCR distribution will provide equal learning of imaging, EHR, and 
+genomic data, avoiding over-fitting of a single modality and providing high accuracy and 
+AUC on all data sources.
+Result and discussion
+This section shows the experimental results of the proposed multimodal health -
+care framework combining EHR (Med-BERT, Transformer-XL), genomic data (GNN 
+encoder), and imaging (Swin Transformer), optimized with the NOA and improved with 
+the KGCL. The framework was tested on MIMIC-IV (EHR), ClinVar (genomics), and 
+CheXpert (imaging) data. It was compared to performance with state-of-the-art uni -
+modal and multimodal baselines.
+Quantitative performance on rare disease diagnosis
+The comparative diagnostic performance of different models is summarized in Table 6.
+Figure 6 shows the comparative diagnostic performance of different models against 
+various evaluation metrics: Accuracy, Precision, Recall, F1-score, and AUC. Models that 
+Table 6 Comparative diagnostic performance of models
+Model Accuracy (%) Precision (%) Recall (%) F1-score (%) AUC (%)
+EHR-only (Med-BERT) 78.4 76.1 75.6 75.8 82.2
+EHR-only (Transformer-XL) 79.6 77.8 76.5 77.1 83.4
+Imaging-only (Swin Transformer) 81.2 79.5 78.4 78.9 85.7
+Genomics-only (GNN) 77.1 75.3 74.8 75.0 81.0
+Multimodal (Early Fusion, baseline) [40] 84.8 83.6 82.1 82.8 88.5
+Multimodal (Late Fusion, baseline) [41] 86.2 84.9 83.8 84.3 89.6
+Proposed KGCL-based Framework 91.7 90.5 89.6 90.0 94.1
+--- PAGE 19 ---
+Page 19 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+use a single modality, including Med-BERT and Transformer-XL on EHR, Swin Trans -
+former on imaging, and GNN on genomics, achieve moderate accuracy (77.1–81.2%). 
+Baseline multimodal methods such as Early Fusion and Late Fusion demonstrate better 
+results because of the combination of heterogeneous biomedical data, with the result -
+ing accuracies being 84.8% and 86.2%, respectively. The proposed KGCL-based model 
+performs much better than the single-modality and baseline multimodal models with 
+an accuracy of 91.7% and an AUC of 94.1%. This performance gain highlights the power 
+of the KGCL strategy in aligning cross-modal representations and the NOA in param -
+eter optimization, which can increase predictive reliability and robustness in rare disease 
+diagnosis.
+Ablation study
+To analyze the role of each of the components in the proposed KGCL-based framework, 
+we performed ablation experiments in which we removed or modified the modules sys -
+tematically. The findings are in Table 7.
+The ablation study illustrates the role of the various components of the proposed 
+KGCL-based framework. When the knowledge guidance was eliminated (w/o KG), the 
+model used only contrastive learning, and its accuracy decreased to 88.3%. This decline 
+highlights the importance of clinical knowledge in matching multimodal embeddings to 
+real-world medical relationships. In a similar vein, the absence of contrastive learning 
+(w/o CL) in the process of multimodal fusion decreased the accuracy to 87.5%, which 
+also proved the necessity of contrastive alignment to achieve robust cross-modal rep -
+resentation. Single-modality dropout analysis showed that each modality contributed 
+to the overall predictive power, with the greatest decrease in performance (i.e., -3.6%) 
+resulting when genomic data was removed, followed by imaging (i.e., -2.9%) and EHR 
+data (i.e., -2.1%). The complete KGCL framework with knowledge guidance and con -
+trastive learning showed the best accuracy of 91.7% and an AUC of 94.1%, proving that 
+Fig. 6 Performance comparison of diagnostic performance of models
+ 
+--- PAGE 20 ---
+Page 20 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+the combination of knowledge-based alignment and contrastive learning is an effective 
+approach in the multimodal rare disease diagnosis.
+Comparison with recent works
+To put the performance of the suggested framework into perspective, we contrasted it to 
+the recently published multimodal diagnosis models of 2023–2025, DeepXplainer, DiaX-
+plain, Synergizing Fusion, and NetworkVI. Such studies utilize a mixture of imaging, 
+clinical, and omics data with different fusion approaches and interpretability methods. 
+Table 8 reports the modalities, methods, main techniques, and evaluation measures.
+Figure 7 shows a comparative analysis of the recent state-of-the-art multimodal and 
+explainable diagnostic models published in 2023–2025. The DeepXplainer model, which 
+incorporates CNN and XGBoost to work with lung imaging data, showed an F1-score 
+of 98.1%, an AUC of 97.4%, and the high interpretability of SHAP-based explanations. 
+DiaXplain, which utilizes CNN and XGBoost as well but uses clinical and EHR data 
+to predict diabetes diagnosis, achieved an F1 of 97.5% and an AUC of 98.2% with high 
+transparency of predictions. In the Synergizing Fusion framework, ECG signals were 
+combined with blood tests through CNN and XGBoost with an F1-score of 97.2% and 
+AUC of 97.5%, which is medium-high interpretability. NetworkVI is a sparse deep gen -
+erative model that is optimised for single-cell multi-omics integration and has a high 
+performance of an F1 of 91.5% and an AUC of 94.0% with an emphasis on gene and 
+cell-type interpretability. The proposed KGCL-based framework combining Swin Trans-
+former, Med-BERT, Transformer-XL, GNN, and Nutcracker Optimization Algorithm 
+had an F1-score of 92.3% and an AUC of 96.1% across imaging, EHR, and genomic 
+modalities. Remarkably, it had extremely high interpretability, as a result of the com -
+bined effect of knowledge-guided contrastive learning and attention-based multimodal 
+fusion, showing a trade-off between predictive performance and explainability in rare 
+disease diagnosis.
+Fig. 7 Performance comparison of proposed framework with recent work
+ 
+--- PAGE 21 ---
+Page 21 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+Temporal convergence and stability
+We also investigated the convergence property of training of different fusion strategies 
+to measure optimization stability. The standard deviation of the loss change (DeltaLt) 
+over 50 epochs was adopted as a measure of stability, with lower values indicating a 
+smoother, reliable convergence. The epochs it took to converge were also noted. Table  9 
+summarizes the results.
+The Proposed Framework has the least variance of 0.006, which means more consis -
+tent gradient updates than Early Fusion (0.015) and Late Fusion (0.012). It also converges 
+in only 28 epochs, which is roughly 30% less than the 41 epochs taken by Early Fusion. 
+These results indicate that the knowledge-assisted contrastive alignment not only 
+improves accuracy, as shown in Sect. 5.2, but also speeds up convergence and minimizes 
+training instability.
+Generalization ability
+To assess the degree of generalization of the models beyond the data used in training, we 
+calculated the generalization gap (G), which is defined as the difference between the val -
+idation loss and the training loss. The narrower the gap, the more robust and less overfit. 
+The results were tabulated in Table 10.
+The most important insights are that the Proposed Framework reaches the lowest 
+training and validation loss, which means the model fits better but does not overfit. It 
+has a significantly lower generalization gap at 0.037 compared to Early Fusion (0.079) 
+and Late Fusion (0.067), indicating that its combination with multimodal fusion not only 
+leads to an increase in accuracy but also enhances the capability of the framework to 
+generalize to novel patient populations.
+Fairness across modalities
+A key element of multimodal learning frameworks is ensuring balanced modal input. 
+There are risks of over-dependence on a specific modality (e.g., imaging), which can 
+Table 7 Ablation study results
+Configuration Accuracy (%) Precision (%) Recall (%) F1-score (%) AUC (%)
+Full KGCL Framework 91.7 90.5 89.6 90.0 94.1
+w/o Knowledge Guidance (KG removed) 88.3 86.9 86.2 86.5 90.8
+w/o Contrastive Learning (CL removed) 87.5 86.1 85.4 85.7 89.9
+w/o Genomics 88.1 87.0 85.7 86.3 90.2
+w/o Imaging 88.8 87.5 86.8 87.1 90.6
+w/o EHR 89.6 88.4 87.9 88.1 91.3
+Table 8 Comparison with recent multimodal diagnostic methods
+Study Method Data Modalities F1 
+(%)
+AUC 
+(%)
+Interpret-
+ability
+DeepXplainer [42] CNN + XGBoost Imaging (Lung CT/X-ray) 98.1 97.4 High
+DiaXplain [43] CNN + XGBoost Clinical/EHR 97.5 98.2 High
+Synergizing Fusion 
+[44]
+CNN + XGBoost ECG + Blood Tests 97.2 97.5 Medium-
+High
+NetworkVI [45] Sparse Deep Generative 
+Model
+Single-cell multi-omics 91.5 94.0 High
+Proposed 
+Framework
+Swin + Med-
+BERT + Transformer-
+XL + GNN + KGCL + NOA
+Imaging + EHR + Genomics 92.3 96.1 Very High
+--- PAGE 22 ---
+Page 22 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+diminish fairness, introduce biases, and limit robustness in the case of missing or noisy 
+modalities. To measure this, we determined the MCR of each source of input as shown 
+in Table 11.
+Modality contributions analysis shows that Early and Late Fusion models are domi -
+nated by imaging features (approximately 0.43–0.46), thus creating unbalanced data 
+among modalities. In comparison, the Proposed Framework has a more balanced con -
+tribution distribution, with imaging at 0.35, EHR at 0.33, and genomics at 0.32. This bal -
+anced MCR highlights the success of KGCL in aligning cross-modal representations, 
+bias reduction, and the fair combination of all modalities.
+Statistical and convergence analysis
+As an additional test of the strength and stability of the proposed KGCL-based frame -
+work, we performed both statistical significance testing and convergence dynamics 
+analysis. The statistical significance was evaluated by the paired t-tests between five 
+independent runs to compare the proposed framework to the baseline multimodal 
+fusion strategies. The results in Table  12 indicate that the accuracy and F1-score are 
+improved over the baselines of Early Fusion and Late Fusion. The p-values in both situ -
+ations are less than 0.01, which indicates that the performance gains are statistically sig -
+nificant and unlikely to be random.
+Table 13 shows the convergence behavior of the proposed framework as compared 
+to Early and Late Fusion. The normalized loss reduction per epoch (Delta L/epoch) 
+shows how well the parameter updates are happening during the training. The proposed 
+framework shows an improved average loss decrease per epoch, and converges after 28 
+epochs, which is 32% and 46% faster than Late Fusion and Early Fusion, respectively. 
+Table 9 Convergence stability analysis (variance of ΔLt across 50 epochs)
+Model Var(ΔLt) ↓ Convergence Epochs ↓
+Early Fusion 0.015 41
+Late Fusion 0.012 39
+Proposed Framework 0.006 28
+Table 10 Generalization gap comparison
+Model Training Loss Validation Loss Generalization Gap (G) ↓
+Early Fusion 0.312 0.391 0.079
+Late Fusion 0.298 0.365 0.067
+Proposed Framework 0.255 0.292 0.037
+Table 11 Modality contribution ratios
+Modality Early Fusion (MCR) Late Fusion (MCR) Proposed Framework (MCR)
+Imaging (Swin) 0.46 0.43 0.35
+EHR (Med-BERT + Transformer-XL) 0.32 0.34 0.33
+Genomics (GNN) 0.22 0.23 0.32
+Table 12 Statistical significance (p-values from paired t-test across 5 runs)
+Comparison Accuracy Improvement F1-Score Improvement p-value
+Proposed vs. Early Fusion + 5.4% + 6.2% 0.003
+Proposed vs. Late Fusion + 3.7% + 4.1% 0.007
+--- PAGE 23 ---
+Page 23 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+This faster convergence can be ascribed to the KGCL-enhanced cross-modal representa-
+tion learning and Bayesian aggregation, which enhance the training efficiency but at the 
+same time ensure stable and smooth optimization.
+Dataset limitations and generalization
+One of the main challenges that are faced in this study is the bias in the dataset that influ-
+ences the generalizability of the proposed framework. As an example, MIMIC-IV is mostly 
+used in North American hospitals, which lowers its usability in other healthcare systems that 
+have different clinical practices and patient demographics. Likewise, CheXpert is skewed 
+to adult populations, with few pediatric imaging cases, and ClinVar is skewed to European 
+ancestries, with few other populations. These are the limitations that inhibit the ability of 
+the framework to perform uniformly across demographics and clinical settings. To reduce 
+these problems, we used data augmentation, transfer learning, and ontology-guided learning 
+(KGCL) to enhance robustness and fairness. However, a lack of multi-center external valida-
+tion still remains a limitation, as it was raised by Reviewer 3. Future work will be needed to 
+overcome this limitation by including multi-center, demographically-representative datasets 
+to improve fairness, generalizability, and clinical reliability.
+Practical and clinical implications
+Clinically, the framework proposed can have great applicability to real-life practice. It com-
+bines EHR, imaging, and genomic data to improve early diagnosis of complex and rare dis-
+eases with a more comprehensive and timely view for the physician. The inclusion of KGCL 
+enhances explainability, and it is easier to understand how predictions are made based on 
+ontology-based reasoning, thus creating more confidence and openness in clinical decision-
+making. Significantly, the framework minimizes the chances of misdiagnosis, especially in 
+cases where the symptoms are overlapping or rare, and using a single modality is usually 
+ineffective. Of equal importance is its feasibility of deployment: the scalable architectures 
+based on transformers make it compatible with the current hospital IT infrastructure, and 
+therefore, the adoption barrier is minimal. In providing these points, the framework directly 
+answers the challenge posed by Reviewer 1 to provide real-world applicability and its signifi-
+cance as a decision-support tool towards precision medicine development.
+Conclusion
+The proposed study is based on a brand-new KGCL multimodal framework that can be used 
+to diagnose rare diseases early with the assistance of EHRs, genomic sequences, and medical 
+imaging. The proposed framework uses Swin Transformer to extract visual features hierar-
+chically, Med-BERT and Transformer-XL to model the EHRs semantically and temporally, 
+and GNN to capture the functional and structural relationships in genomics. The alignment 
+across modalities is further augmented by KGCL, which uses domain knowledge of rare dis-
+ease ontologies, and hyperparameters and attention mechanisms are optimized by NOA. 
+Large-scale experiments on MIMIC-IV, CheXpert, and ClinVar datasets prove that the 
+Table 13 Normalized convergence speed (Loss reduction per epoch, ↑ better)
+Model Avg. Loss Drop (ΔL/epoch) Convergence Epochs ↓
+Early Fusion 0.0071 41
+Late Fusion 0.0084 39
+Proposed Framework 0.0126 28
+--- PAGE 24 ---
+Page 24 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+proposed framework achieves a higher accuracy, precision, recall, F1-score, and AUC than 
+unimodal and baseline multimodal models do. Ablation experiments indicate the essential 
+role of contrastive learning and the ontology-guided knowledge guidance, whereas the tem-
+poral convergence and generalization experiments show the accelerated and more stable 
+training and improved transferability. The analysis of modality contributions verifies the bal-
+ance between learning from EHR, imaging, and genomic data. Statistical significance tests 
+also prove the strength of the enhancements as compared to the current methods of fusion. 
+Although these results are encouraging, some drawbacks remain, such as bias in the dataset 
+to North American and adult populations and a lack of multi-center validation. The next line 
+of work will be on integrating demographically diverse and multi-center data, and on using 
+other rare disease ontologies to further increase the interpretability and clinical utility.
+Author contributions
+Ahed Abugabah: Idea and concept generation; editing and formatting; mathematical modeling; methodology; Prashant 
+Kumar Shukla: Implementation; Piyush Kumar Shukla: literature review; supervision and editing: Ankur Pandey; Literature 
+review.
+Funding
+Open access funding provided by Manipal University Jaipur. No fund has been utilized for his research work.
+Data availability
+The data that support the findings of this study are available on request from the corresponding author.
+Declarations
+Ethics approval and consent to participate
+Not applicable.
+Consent for publication
+Not applicable.
+Competing interests
+The authors declare no competing interests.
+Received: 27 July 2025 / Accepted: 15 September 2025
+References
+1. Groft SC, Posada M, Taruscio D. Progress, challenges and global approaches to rare diseases. Acta Paediatr. 
+2021;110(10):2711–6.
+2. Chaudhary A. Rare diseases: a comprehensive literature review and future directions. J Rare Dis. 2025;4(1):33.
+3. Al-Worafi Y. Patient care related issues in the developing countries: diagnosis. Handbook of medical and health sciences in 
+developing countries: Education, Practice, and research. Cham: Springer International Publishing; 2023. pp. 1–21.
+4. Manemann SM, Sauver JLS, Liu H, Larson NB, Moon S, Takahashi PY, Janet E, Olson et al. Longitudinal cohorts for Harness-
+ing the electronic health record for disease prediction in a US population. BMJ open. 2021;11(6):e044353.
+5. Meuwissen T, Hayes B, MacLeod I, Goddard M. Identification of genomic variants causing variation in quantitative traits: a 
+review. Agriculture. 2022;12(10):1713.
+6. Abhisheka B, Biswas SK, Purkayastha B, Das D, Escargueil A. Recent trend in medical imaging modalities and their applica-
+tions in disease diagnosis: a review. Multimedia Tools Appl. 2024;83(14):43035–70.
+7. Xu X, Li J, Zhu Z, Zhao L, Wang H, Song C, Chen Y, Zhao Q. Jijiang Yang, and Yan Pei. A comprehensive review on synergy of 
+multi-modal data and ai technologies in medical diagnosis. Bioengineering. 2024;11(3):219.
+8. Ma X, Du Y, Sui D. A U-Shaped architecture based on hybrid CNN and Mamba for medical image Segmentation. Applied 
+sciences (2076–3417). 2025;15(14).
+9. Choi S, Roy, Lee M. Transformer architecture and attention mechanisms in genome data analysis: a comprehensive review. 
+Biology. 2023;12(7):1033.
+10. AlSaad R, Abd-Alrazaq A, Boughorbel S, Ahmed A, Renault M-A, Rafat Damseh, and Javaid Sheikh. Multimodal large Lan-
+guage models in health care: applications, challenges, and future outlook. J Med Internet Res. 2024;26:e59505.
+11. Mir A, Nazir DR, Rizvi, Md Rizwan A. Enhancing histopathological image analysis: an explainable vision transformer 
+approach with comprehensive interpretation methods and evaluation of explanation quality. Eng Appl Artif Intell. 
+2025;149:110519.
+12. Mir AN, Danish Raza Rizvi. Advancements in deep learning and explainable artificial intelligence for enhanced medical 
+image analysis: a comprehensive survey and future directions. Eng Appl Artif Intell. 2025;158:111413.
+13. Rillig F, Grüters A, Schramm C, Heiko Krude. The interdisciplinary diagnosis of rare diseases: results of the Translate-NAMSE 
+project. Deutsches Ärzteblatt International. 2022;119:27–8.
+--- PAGE 25 ---
+Page 25 of 25
+Abugabah et al. BioData Mining           (2025) 18:70 
+14. Zhou H-Y, Yu Y, Wang C, Zhang S, Gao Y, Pan J, Shao J, Lu G, Zhang K, Li W. A transformer-based representation-learning 
+model with unified processing of multimodal input for clinical diagnostics. Nat Biomedical Eng. 2023;7(6):743–55.
+15. Jordan DM, Ha My T, Vy, Do R. A deep learning transformer model predicts high rates of undiagnosed rare disease in large 
+electronic health systems. medRxiv. 2023.
+16. Luo Y. and Yixuan Yuan. Semantic-guided unknown-aware rare disease diagnosis system. In 2023 IEEE International Con-
+ference on Bioinformatics and Biomedicine (BIBM), pp. 2133–2136. IEEE, 2023.
+17. Songfeng D. and Chen Xingwu. Exploiting uncertainty: a transformer-based multi-disease diagnostic approach to chest 
+X-rays. In 2023 20th International Computer Conference on Wavelet Active Media Technology and Information Processing 
+(ICCWAMTIP), pp. 1–5. IEEE, 2023.
+18. Bahadure N, Bhaskarrao S, Dash S, Padhy A, Satpathy, and Sidheswar Routray. Rare diseases severity prediction system 
+using a machine learning-based technique. In 2023 International Conference on Artificial Intelligence for Innovations in 
+Healthcare Industries (ICAIIHI), vol. 1, pp. 1–6. IEEE, 2023.
+19. Moynihan D, Monaco S, Ting TW, Narasimhalu K, Hsieh J, Sylvia Kam, Jiin Ying Lim et al. Data mining of electronic health 
+records to identify undiagnosed patients with rare genetic diseases. 2023.
+20. Dong H, Suárez-Paniagua Víctor, Zhang H, Wang M, Casey A, Davidson E, Chen J, Alex B, Whiteley W, Wu H. Ontology-
+driven and weakly supervised rare disease identification from clinical notes. BMC Med Inf Decis Mak. 2023;23(1):86.
+21. Li TZ, Still JM, Xu K, Lee HH, Leon Y, Cai, Aravind R, Krishnan R, Gao et al. Longitudinal multimodal transformer integrating 
+imaging and latent clinical signatures from routine EHRs for pulmonary nodule classification. In International Conference 
+on Medical Image Computing and Computer-Assisted Intervention, pp. 649–659. Cham: Springer Nature Switzerland, 
+2023.
+22. Niu S, Ma J, Bai L, Wang Z, Guo L, Yang X. EHR-KnowGen: knowledge-enhanced multimodal learning for disease diagnosis 
+generation. Inform Fusion. 2024;102:102069.
+23. Chen Y, Guo X, Xia Y, Yuan Y. Disentangle then calibrate with gradient guidance: a unified framework for common and rare 
+disease diagnosis. IEEE Trans Med Imaging. 2024;43(5):1816–27.
+24. Mgbole T, Juliet, and Michael Owusu Asiamah. Machine learning techniques for diagnosis of rare diseases from medical 
+images. 2024.
+25. van Karnebeek, Clara DM, Anne O’Donnell-Luria G, Baynam Anaïs, Baudot T, Groza, Judith JM, Jans T, Lassmann, et al. 
+Leaving no patient behind! Expert recommendation in the use of innovative technologies for diagnosing rare diseases. 
+Orphanet J Rare Dis. 2024;19(1):357.
+26. Mao X, Huang Y, Jin Y, Wang L, Chen X, Liu H, Yang X, et al. A phenotype-based AI pipeline outperforms human experts in 
+differentially diagnosing rare diseases using EHRs. Npj Digit Med. 2025;8(1):68.
+27. Liu Z, Lin Y, Cao Y, Wei HHY, Zhang Z, Lin S, Guo B. Swin transformer: hierarchical vision transformer using shifted windows. 
+In Proceedings of the IEEE/CVF international conference on computer vision, pp. 10012–10022. 2021.
+28. Liu N, Xu QHH, Xu X, Chen M. Med-BERT: a pretraining framework for medical records named entity recognition. IEEE Trans 
+Industr Inf. 2021;18(8):5600–8.
+29. Li Z, Huang Q, Yang X, Chen Q. Li Zhang. Automatic Composition system based on Transformer-XL. Appl Sci. 2024;14:13.
+30. Khemani B, Patil S, Kotecha K, Tanwar S. A review of graph neural networks: concepts, architectures, techniques, chal-
+lenges, datasets, applications, and future directions. J Big Data. 2024;11(1):18.
+31. Wang H, Xu Y, Yang C, Shi C, Li X, Guo N, Liu Z. Knowledge-adaptive contrastive learning for recommendation. In Proceed-
+ings of the sixteenth ACM international conference on web search and data mining, pp. 535–543. 2023.
+32. Duan Z, Yu H, Zhang Q, Li, Tian. Parameter extraction of solar photovoltaic model based on nutcracker optimization algo-
+rithm. Appl Sci. 2023;13(11):6710.
+33. Johnson AEW, Lucas Bulgarelli L, Shen A, Gayles A, Shammout S, Horng, Tom J, Pollard, et al. MIMIC-IV, a freely accessible 
+electronic health record dataset. Sci Data. 2023;10(1):1.
+34. ClinVar D. Retrieved from https://www.ncbi.nlm.nih.gov/clinvar/
+35. CheXpert: a large chest X-ray dataset and competition. Retrieved from  h t t p s :  / / s t a  n f o r d m  l g r o  u p . g i  t h u b .  i o / c o m  p e t i  t i o n s / c h 
+e x p e r t /
+36. Orphanet Ontology. Retrieved from https://www.orpha.net/
+37. Chang E, Mostafa J. The use of SNOMED CT, 2013–2020: a literature review. J Am Med Inform Assoc. 2021;28(9):2017–26.
+38. Sharma R, Kamra A. A review on CLAHE based enhancement techniques. In 2023 6th International Conference on Con-
+temporary Computing and Informatics (IC3I), vol. 6, pp. 321–325. IEEE, 2023.
+39. Belete DM, Manjaiah D, Huchaiah. Grid search in hyperparameter optimization of machine learning models for prediction 
+of HIV/AIDS test results. Int J Comput Appl. 2022;44(9):875–86.
+40. Neves F, Soares RM, Claro, Andry Maykol Pinto. End-to-end detection of a landing platform for offshore Uavs based on a 
+multimodal early fusion approach. Sensors. 2023;23(5):2434.
+41. Boulahia S, Yacine A, Amamra MR, Madi, Daikh S. Early, intermediate and late fusion strategies for robust deep learning-
+based multimodal action recognition. Mach Vis Appl. 2021;32(6):121.
+42. Wani N, Ahmad R, Kumar. DeepXplainer: an interpretable deep learning based approach for lung cancer detection using 
+explainable artificial intelligence. Comput Methods Programs Biomed. 2024;243:107879.
+43. Singh S, Wani NA, Kumar R, Bedi J. DiaXplain: a transparent and interpretable artificial intelligence approach for type-2 
+diabetes diagnosis through deep learning. Comput Electr Eng. 2025;126:110470.
+44. Botros J, Farah Mourad-Chehade, and, Laplanche D. Explainable multimodal data fusion framework for heart failure detec-
+tion: integrating CNN and XGBoost. Biomed Signal Process Control. 2025;100:106997.
+45. Arnoldt L. Julius Upmeier zu Belzen, Luis Herrmann, Khue Nguyen, Fabian Theis, Benjamin Wild, and Roland Eils. Biologi-
+cally guided variational inference for interpretable multimodal single-cell integration and mechanistic discovery. bioRxiv. 
+2025:2025-06.
+Publisher’s note
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.

@@ -1,0 +1,188 @@
+{
+  "canonical_reproduction": {
+    "Hits@1": 68.61702127659575,
+    "Hits@5": 80.90425531914893,
+    "Hits@10": 83.51063829787235,
+    "MRR": 0.7399342052356692,
+    "errors": 590
+  },
+  "adversarial_dag_audit": {
+    "strict_set_subset": 375,
+    "pred_has_more_matches": 193,
+    "true_has_more_matches": 14,
+    "equal_matches": 8
+  },
+  "empirical_bayes_ceiling": 99.7340425531915,
+  "top50_matrix": [
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:612551",
+      "count": 20,
+      "shared_hpos": 1,
+      "jaccard": 0.023809523809523808,
+      "t_exclusive": 39,
+      "f_exclusive": 2,
+      "max_discriminating_ic": 8.08309710050892,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:201910",
+      "pred_did": "OMIM:617686",
+      "count": 17,
+      "shared_hpos": 0,
+      "jaccard": 0.0,
+      "t_exclusive": 13,
+      "f_exclusive": 9,
+      "max_discriminating_ic": 8.776244281068866,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:201910",
+      "pred_did": "ORPHA:90795",
+      "count": 16,
+      "shared_hpos": 4,
+      "jaccard": 0.0975609756097561,
+      "t_exclusive": 9,
+      "f_exclusive": 28,
+      "max_discriminating_ic": 8.776244281068866,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:129600",
+      "pred_did": "OMIM:110150",
+      "count": 15,
+      "shared_hpos": 3,
+      "jaccard": 0.11538461538461539,
+      "t_exclusive": 21,
+      "f_exclusive": 2,
+      "max_discriminating_ic": 8.3707791729607,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:176670",
+      "pred_did": "OMIM:151660",
+      "count": 15,
+      "shared_hpos": 5,
+      "jaccard": 0.054945054945054944,
+      "t_exclusive": 10,
+      "f_exclusive": 76,
+      "max_discriminating_ic": 8.776244281068866,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:618061",
+      "count": 14,
+      "shared_hpos": 7,
+      "jaccard": 0.16279069767441862,
+      "t_exclusive": 33,
+      "f_exclusive": 3,
+      "max_discriminating_ic": 8.08309710050892,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:618821",
+      "count": 14,
+      "shared_hpos": 1,
+      "jaccard": 0.014925373134328358,
+      "t_exclusive": 39,
+      "f_exclusive": 27,
+      "max_discriminating_ic": 7.85995354919471,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:617609",
+      "count": 13,
+      "shared_hpos": 2,
+      "jaccard": 0.044444444444444446,
+      "t_exclusive": 38,
+      "f_exclusive": 5,
+      "max_discriminating_ic": 8.08309710050892,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:602114",
+      "count": 9,
+      "shared_hpos": 1,
+      "jaccard": 0.022222222222222223,
+      "t_exclusive": 39,
+      "f_exclusive": 5,
+      "max_discriminating_ic": 8.08309710050892,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:621209",
+      "pred_did": "OMIM:620849",
+      "count": 8,
+      "shared_hpos": 11,
+      "jaccard": 0.9166666666666666,
+      "t_exclusive": 1,
+      "f_exclusive": 0,
+      "max_discriminating_ic": 7.523481312573497,
+      "phenotype_distinguishable": false
+    },
+    {
+      "true_did": "OMIM:163950",
+      "pred_did": "OMIM:115150",
+      "count": 8,
+      "shared_hpos": 27,
+      "jaccard": 0.17880794701986755,
+      "t_exclusive": 31,
+      "f_exclusive": 93,
+      "max_discriminating_ic": 8.3707791729607,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:174000",
+      "count": 8,
+      "shared_hpos": 12,
+      "jaccard": 0.24489795918367346,
+      "t_exclusive": 28,
+      "f_exclusive": 9,
+      "max_discriminating_ic": 8.776244281068866,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:162000",
+      "pred_did": "OMIM:613237",
+      "count": 8,
+      "shared_hpos": 4,
+      "jaccard": 0.09302325581395349,
+      "t_exclusive": 36,
+      "f_exclusive": 3,
+      "max_discriminating_ic": 8.08309710050892,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:271640",
+      "pred_did": "OMIM:615349",
+      "count": 7,
+      "shared_hpos": 33,
+      "jaccard": 0.34375,
+      "t_exclusive": 44,
+      "f_exclusive": 19,
+      "max_discriminating_ic": 7.389949919948974,
+      "phenotype_distinguishable": true
+    },
+    {
+      "true_did": "OMIM:616907",
+      "pred_did": "ORPHA:488594",
+      "count": 7,
+      "shared_hpos": 15,
+      "jaccard": 0.4411764705882353,
+      "t_exclusive": 17,
+      "f_exclusive": 2,
+      "max_discriminating_ic": 6.424869023905388,
+      "phenotype_distinguishable": true
+    }
+  ],
+  "active_acquisition": {
+    "resolved_errors": 450,
+    "recovery_pct": 76.27118644067797,
+    "potential_hits1": 92.5531914893617
+  }
+}

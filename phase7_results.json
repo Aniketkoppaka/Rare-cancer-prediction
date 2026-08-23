@@ -1,0 +1,65 @@
+{
+  "mapping_coverage": {
+    "benchmark_diseases_mapped": 509,
+    "benchmark_diseases_total": 803,
+    "benchmark_cases_mapped": 7929,
+    "benchmark_cases_total": 10601,
+    "candidate_universe_mapped": 10998,
+    "candidate_universe_total": 12956
+  },
+  "error_taxonomy": {
+    "D: Same Orphanet clinical classification branch": 211,
+    "E: Weak phenotype overlap on common symptoms": 103,
+    "G: Annotation mismatch / Sparse patient presentation": 136,
+    "H: Unknown / Other": 3,
+    "F: Candidate caused by broad-profile accumulation": 6,
+    "C: Related diseases in same genetic/disease family": 46,
+    "A: Near-identical phenotype profiles / Same concept": 78,
+    "B: Strong HPO overlap but distinct diseases": 7
+  },
+  "upper_bound": {
+    "tied": 0,
+    "top5": 231,
+    "top10": 280,
+    "rank_gt_10": 310,
+    "total": 590
+  },
+  "full_universe": {
+    "O1": {
+      "Hits@1": 68.61702127659575,
+      "Hits@5": 80.90425531914893,
+      "Hits@10": 83.51063829787235,
+      "MRR": 0.7399342052356692
+    },
+    "O2": {
+      "Hits@1": 68.61702127659575,
+      "Hits@5": 80.85106382978722,
+      "Hits@10": 83.45744680851064,
+      "MRR": 0.7393691970571521
+    },
+    "O3": {
+      "Hits@1": 68.61702127659575,
+      "Hits@5": 80.85106382978722,
+      "Hits@10": 83.45744680851064,
+      "MRR": 0.7392357546435405
+    }
+  },
+  "mapped_subset": {
+    "O1": {
+      "Hits@1": 64.34049079754601,
+      "Hits@5": 76.15030674846625,
+      "Hits@10": 79.4478527607362,
+      "MRR": 0.6976452615358466
+    },
+    "O2": {
+      "Hits@1": 64.34049079754601,
+      "Hits@5": 76.07361963190185,
+      "Hits@10": 79.4478527607362,
+      "MRR": 0.6976139662993768
+    }
+  },
+  "same_group_errors": {
+    "count": 325,
+    "pct": 55.08474576271186
+  }
+}
