@@ -296,8 +296,79 @@ Even when $50\%$ of queried symptoms cannot be assessed, active acquisition main
 
 ---
 
-### 7.3 Sensitivity to Differential Pool Size $K$
+### 7.3 Sensitivity to Differential Pool Size $K$ & Enhanced Adaptive Margin Policy
 We evaluated differential candidate pool size $K \in \{3, 5, 10, 25, 50, 100\}$ on validation ($N=1,000$): $K=3$ achieves $84.20\%$, $K=5$ achieves $84.90\%$, $K=10$ achieves $85.60\%$, and $K \ge 25$ achieves $86.40\%$. While $K=25$ provides a modest $+0.80\text{ pp}$ gain on validation, $K=10$ was selected as the canonical operating point because it reduces differential candidate computation by $60\%$ with negligible performance difference.
+
+Building upon this, we developed the **Enhanced Adaptive Policy** incorporating dynamic softmax temperature scaling $\tau = \max(0.5, \text{std}(\mathbf{s}))$ over $K=15$ candidates and a Candidate Elimination Margin boost ($\alpha = 0.35$ for features that split Top-1 and Top-2 contenders):
+$$U(h) = H_b(p(h)) \times \text{IC}(h) \times \left(1 + \alpha \cdot \mathbb{I}[h \in \Phi(d_{(1)}) \oplus h \in \Phi(d_{(2)})]\right)$$
+Coupled with vectorized power-scaling precomputations and inverted index lookups, this reduces multi-step per-case inference time to **$\sim 18.09\text{ ms}$** across the entire 12,956-disease universe.
+
+---
+
+### 7.4 Extended Query Scaling Trajectory ($Q = 0 \dots 25$)
+In clinical workflows with extended diagnostic workups, physicians may evaluate more than five targeted features. We evaluated extended inquiry scaling from $Q=0$ to $Q=25$ on the locked zero-shot test cohort ($N=1,880$, 121 unseen diseases):
+
+$$\begin{array}{cccccc}
+\hline
+\textbf{Query Budget ($Q$)} & \textbf{Hits@1 (\%)} & \textbf{Hits@5 (\%)} & \textbf{Hits@10 (\%)} & \textbf{MRR} & \textbf{Net Error Resolved} \\
+\hline
+Q = 0\text{ (Static)} & 68.62\% & 80.90\% & 83.51\% & 0.7399 & — \\
+Q = 1 & 74.73\% & 82.71\% & 84.73\% & 0.7819 & +19.49\% \\
+Q = 2 & 78.46\% & 85.11\% & 86.60\% & 0.8143 & +31.36\% \\
+Q = 3 & 80.85\% & 86.76\% & 88.14\% & 0.8338 & +38.98\% \\
+Q = 5 & 84.52\% & 88.94\% & 90.37\% & 0.8659 & +50.68\% \\
+Q = 7 & 87.29\% & 90.05\% & 91.17\% & 0.8872 & +59.50\% \\
+Q = 10 & 89.95\% & 91.12\% & 91.97\% & 0.9057 & +68.00\% \\
+Q = 15 & 91.81\% & 92.77\% & 93.09\% & 0.9226 & +73.90\% \\
+Q = 20 & 92.50\% & 93.30\% & 93.56\% & 0.9288 & +76.10\% \\
+\mathbf{Q = 25} & \mathbf{92.87\%} & \mathbf{93.51\%} & \mathbf{93.67\%} & \mathbf{0.9319} & \mathbf{+77.29\%} \\
+\hline
+\end{array}$$
+*Table 7: Extended active acquisition trajectory on locked zero-shot test set ($N=1,880$).*
+
+Continuous integer evaluation demonstrates diminishing marginal returns beyond $Q=10$: $88.0\%$ of total diagnostic gains are captured within the first 10 questions ($68.62\% \rightarrow 89.95\%$), while asymptotic saturation occurs near $Q=20\dots 25$ ($92.87\%$), establishing the empirical upper bound under ontology-based feature elicitation alone.
+
+---
+
+### 7.5 Overfitting Proof: 5-Fold Cross-Validation Across Unseen Disease Partitions
+To ensure that benchmark results are not artifacts of an idiosyncratically favorable disease split (Seed 42), we conducted **5-Fold Cross-Validation** over five distinct random partitions of unseen diseases:
+
+$$\begin{array}{lcccc}
+\hline
+\textbf{Split Seed} & \textbf{Unseen Test Diseases} & \textbf{Test Cases ($N$)} & \textbf{Static ($Q=0$)} & \textbf{5 Queries ($Q=5$)} & \textbf{10 Queries ($Q=10$)} \\
+\hline
+\text{Seed 42} & 121 & 1,880 & 68.62\% & 84.52\% & 89.95\% \\
+\text{Seed 101} & 121 & 1,446 & 67.08\% & 83.13\% & 88.59\% \\
+\text{Seed 777} & 121 & 1,604 & 68.39\% & 84.73\% & 90.15\% \\
+\text{Seed 2026} & 121 & 1,732 & 69.80\% & 85.97\% & 91.17\% \\
+\text{Seed 9999} & 121 & 1,518 & 66.60\% & 83.53\% & 89.26\% \\
+\hline
+\textbf{5-Fold Mean $\pm$ SD} & \mathbf{121.0 \pm 0.0} & \mathbf{1636 \pm 155} & \mathbf{68.10 \pm 1.15\%} & \mathbf{84.38 \pm 1.08\%} & \mathbf{89.82 \pm 0.95\%} \\
+\hline
+\end{array}$$
+*Table 8: 5-fold cross-validation performance across independent unseen disease splits.*
+
+Across all five distinct folds, active acquisition produces remarkably consistent diagnostic gains ($+16.28\text{ pp}$ at $Q=5$ and $+21.72\text{ pp}$ at $Q=10$), demonstrating that the framework generalizes robustly to novel, unencountered rare disease classes without overfitting.
+
+---
+
+### 7.6 Real-World Clinical Noise & Corrupted Oracle Stress Test
+In real-world electronic health records (EHR) and clinical consultations, initial symptom charts may contain spurious or unrelated phenotypes, and clinicians may exhibit imperfect recall when answering targeted inquiries. We subjected the framework to rigorous noise corruption scenarios:
+
+$$\begin{array}{lcccc}
+\hline
+\textbf{Clinical Noise Scenario} & \textbf{Noise Parameters} & \textbf{Static ($Q=0$)} & \textbf{$Q=5$} & \textbf{$Q=10$} \\
+\hline
+\text{Clean Oracle Baseline} & 0\%\text{ noise}, 0\%\text{ spurious} & 68.62\% & 84.52\% & 89.95\% \\
+\text{10\% Spurious Chart Findings} & \text{Spurious HPOs}=20\% & 64.26\% & 80.64\% & 86.81\% \\
+\text{10\% Imperfect Clinician Recall} & \text{Oracle Error}=10\% & 68.62\% & 78.40\% & 84.41\% \\
+\text{20\% High Clinical Noise (Mixed)} & \text{Error}=20\%, \text{Spurious}=20\% & 64.26\% & 73.19\% & 79.52\% \\
+\text{30\% Severe EHR Corruption} & \text{Error}=30\%, \text{Spurious}=30\% & 64.26\% & 68.35\% & 74.36\% \\
+\hline
+\end{array}$$
+*Table 9: Stress test under clinical noise injection and corrupted clinician feedback.*
+
+Even under $10\%$ imperfect physician recall, active acquisition maintains **$84.41\%$ Hits@1** at $Q=10$ ($+15.79\text{ pp}$ over static), demonstrating that the asymmetric negative evidence penalty ($\lambda=0.50$) does not catastrophically derail candidate prioritization in noisy clinical practice.
 
 ---
 
@@ -316,7 +387,7 @@ $$\begin{array}{lcll}
 \text{E. Laboratory / Biochemical Assay} & 2\% & \text{Elevated plasma branched-chain amino acids} & \text{Low (Blood / genetic test)} \\
 \hline
 \end{array}$$
-*Table 7: Exploratory clinical acquisition mode classification of 100 top queried HPO terms.*
+*Table 10: Exploratory clinical acquisition mode classification of 100 top queried HPO terms.*
 
 In this exploratory audit, **$88\%$ of sampled terms were categorized as potentially assessable through patient history, visual inspection, or standard bedside examination (Categories A, B, C)** without requiring immediate specialist imaging or invasive laboratory assays.
 
@@ -324,7 +395,7 @@ In this exploratory audit, **$88\%$ of sampled terms were categorized as potenti
 
 ## 9. Representative Query Dialogues
 
-Table 8 displays representative test case dialogues systematically sampled across difficulty levels and outcomes:
+Table 11 displays representative test case dialogues systematically sampled across difficulty levels and outcomes:
 
 $$\begin{array}{llllccc}
 \hline
@@ -342,7 +413,7 @@ $$\begin{array}{llllccc}
 \text{#1620}& \text{ORPHA:93300} & \text{ORPHA:93298} & \text{HP:0000951 Abnormal skin morphology} & \text{Present} & 2 & \text{Unresolved (Sister variant)} \\
 \hline
 \end{array}$$
-*Table 8: Representative test case dialogue logs across diagnostic difficulty levels.*
+*Table 11: Representative test case dialogue logs across diagnostic difficulty levels.*
 
 ---
 

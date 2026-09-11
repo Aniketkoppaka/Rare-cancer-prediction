@@ -85,7 +85,7 @@ valid_records = 0
 with open(hpoa_path, 'r', encoding='utf-8') as f:
     for line in f:
         total_lines += 1
-        if line.startswith('#'):
+        if line.startswith('#') or line.startswith('database_id\t'):
             comment_lines += 1
             continue
         s_line = line.strip()

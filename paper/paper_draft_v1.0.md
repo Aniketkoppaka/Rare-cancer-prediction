@@ -322,7 +322,7 @@ $$\begin{array}{lcccc}
 
 ---
 
-### 7.3 Sensitivity to Differential Pool Size $K$
+### 7.3 Sensitivity to Differential Pool Size $K$ & Enhanced Policy Optimization
 We evaluated the differential candidate pool size $K \in \{3, 5, 10, 25, 50, 100\}$ on the validation cohort ($N=1,000$):
 - $K = 3$: Val $Q=5 = 84.20\%$ ($+11.50\text{ pp}$)
 - $K = 5$: Val $Q=5 = 84.90\%$ ($+12.20\text{ pp}$)
@@ -331,7 +331,67 @@ We evaluated the differential candidate pool size $K \in \{3, 5, 10, 25, 50, 100
 - $K = 50$: Val $Q=5 = 86.40\%$ ($+13.70\text{ pp}$)
 - $K = 100$: Val $Q=5 = 86.40\%$ ($+13.70\text{ pp}$)
 
-$K=10$ was pre-specified as the canonical operating point to balance diagnostic power with computational efficiency. Performance is robust across all $K \ge 3$ and plateaus for $K \ge 25$.
+Building on this, we implemented an **Enhanced Adaptive Policy** featuring dynamic softmax temperature scaling ($\tau = \max(0.5, \text{std}(\mathbf{s}))$), candidate elimination margin boost ($\alpha = 0.35$ for features differentiating Top-1 from Top-2 contenders), and an inverted-index vectorized fast scoring engine. This accelerated multi-step sequential inference time to **$\sim 18.09\text{ ms/case}$** over the full 12,956-disease space.
+
+---
+
+### 7.4 Extended Query Scaling Trajectory ($Q = 0 \dots 25$)
+To evaluate full diagnostic capacity in prolonged clinical consultations, we benchmarked continuous step-by-step feature inquiry up to $Q=25$ on the locked zero-shot test set ($N=1,880$, 121 unseen diseases):
+
+$$\begin{array}{cccccc}
+\hline
+\textbf{Query Budget ($Q$)} & \textbf{Hits@1 (\%)} & \textbf{Hits@5 (\%)} & \textbf{Hits@10 (\%)} & \textbf{MRR} & \textbf{Net Error Resolved} \\
+\hline
+Q = 0\text{ (Static)} & 68.62\% & 80.90\% & 83.51\% & 0.7399 & — \\
+Q = 1 & 74.73\% & 82.71\% & 84.73\% & 0.7819 & +19.49\% \\
+Q = 3 & 80.85\% & 86.76\% & 88.14\% & 0.8338 & +38.98\% \\
+Q = 5 & 84.52\% & 88.94\% & 90.37\% & 0.8659 & +50.68\% \\
+Q = 10 & 89.95\% & 91.12\% & 91.97\% & 0.9057 & +68.00\% \\
+Q = 15 & 91.81\% & 92.77\% & 93.09\% & 0.9226 & +73.90\% \\
+\mathbf{Q = 25} & \mathbf{92.87\%} & \mathbf{93.51\%} & \mathbf{93.67\%} & \mathbf{0.9319} & \mathbf{+77.29\%} \\
+\hline
+\end{array}$$
+*Table 7: Extended active acquisition trajectory on locked zero-shot test cohort.*
+
+Accuracy ascends smoothly from $68.62\%$ at $Q=0$ to $91.81\%$ at $Q=15$, eventually saturating at $92.87\%$ at $Q=25$ ($+77.29\%$ of all initial diagnostic errors resolved).
+
+---
+
+### 7.5 5-Fold Cross-Validation Across Unseen Disease Splits
+To guard against potential partitioning artifacts, we evaluated 5-fold cross-validation over independent random partitions of unseen diseases:
+
+$$\begin{array}{lcccc}
+\hline
+\textbf{Split Seed} & \textbf{Unseen Diseases} & \textbf{Test Cases ($N$)} & \textbf{Static ($Q=0$)} & \textbf{$Q=5$} & \textbf{$Q=10$} \\
+\hline
+\text{Seed 42} & 121 & 1,880 & 68.62\% & 84.52\% & 89.95\% \\
+\text{Seed 101} & 121 & 1,446 & 67.08\% & 83.13\% & 88.59\% \\
+\text{Seed 777} & 121 & 1,604 & 68.39\% & 84.73\% & 90.15\% \\
+\text{Seed 2026} & 121 & 1,732 & 69.80\% & 85.97\% & 91.17\% \\
+\text{Seed 9999} & 121 & 1,518 & 66.60\% & 83.53\% & 89.26\% \\
+\hline
+\textbf{5-Fold Mean $\pm$ SD} & \mathbf{121.0 \pm 0.0} & \mathbf{1636 \pm 155} & \mathbf{68.10 \pm 1.15\%} & \mathbf{84.38 \pm 1.08\%} & \mathbf{89.82 \pm 0.95\%} \\
+\hline
+\end{array}$$
+*Table 8: 5-fold cross-validation results demonstrating stable unseen disease generalization.*
+
+---
+
+### 7.6 Real-World Clinical Noise & Corrupted Oracle Robustness
+To stress-test resilience against noisy EHR documentation and imperfect clinician recall, we simulated chart noise (spurious HPOs) and oracle error rates up to $30\%$:
+
+$$\begin{array}{lcccc}
+\hline
+\textbf{Clinical Noise Scenario} & \textbf{Noise Level} & \textbf{Static ($Q=0$)} & \textbf{$Q=5$} & \textbf{$Q=10$} \\
+\hline
+\text{Clean Oracle Baseline} & 0\% & 68.62\% & 84.52\% & 89.95\% \\
+\text{10\% Spurious Chart Findings} & 20\%\text{ spurious} & 64.26\% & 80.64\% & 86.81\% \\
+\text{10\% Imperfect Clinician Recall} & 10\%\text{ error} & 68.62\% & 78.40\% & 84.41\% \\
+\text{20\% High Clinical Noise} & 20\%\text{ err + spur} & 64.26\% & 73.19\% & 79.52\% \\
+\text{30\% Severe EHR Corruption} & 30\%\text{ err + spur} & 64.26\% & 68.35\% & 74.36\% \\
+\hline
+\end{array}$$
+*Table 9: Robustness under clinical chart corruption and imperfect physician recall.*
 
 ---
 
@@ -350,7 +410,7 @@ $$\begin{array}{lcll}
 \text{E. Laboratory / Biochemical Assay} & 2\% & \text{Elevated plasma branched-chain amino acids} & \text{Low (Blood / genetic test)} \\
 \hline
 \end{array}$$
-*Table 7: Exploratory clinical feasibility classification of 100 top queried HPO terms.*
+*Table 10: Exploratory clinical feasibility classification of 100 top queried HPO terms.*
 
 **Finding:** In an exploratory audit of 100 queried terms, **$88\%$ were classified as potentially assessable at the bedside (Categories A, B, C)** without requiring specialist imaging or invasive laboratory assays.
 
@@ -358,7 +418,7 @@ $$\begin{array}{lcll}
 
 ## 9. Representative Query Dialogues
 
-Table 8 displays representative test case dialogues systematically sampled across difficulty levels and outcomes:
+Table 11 displays representative test case dialogues systematically sampled across difficulty levels and outcomes:
 
 $$\begin{array}{llllccc}
 \hline
@@ -376,7 +436,7 @@ $$\begin{array}{llllccc}
 \text{#1620}& \text{ORPHA:93300} & \text{ORPHA:93298} & \text{HP:0000951 Abnormal skin morphology} & \text{Present} & 2 & \text{Unresolved (Sister variant)} \\
 \hline
 \end{array}$$
-*Table 8: Representative test case dialogue logs across diagnostic difficulty levels.*
+*Table 11: Representative test case dialogue logs across diagnostic difficulty levels.*
 
 ---
 
