@@ -65,5 +65,5 @@ for bar in bars:
              f'{height:.2f}%', ha='center', va='bottom', fontsize=10, fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('trajectory_and_performance_matrix.png', dpi=300)
-print("Saved trajectory_and_performance_matrix.png successfully!")
+plt.savefig('figures/trajectory_and_performance_matrix.png', dpi=300)
+print("Saved figures/trajectory_and_performance_matrix.png successfully!")

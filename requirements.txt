@@ -1,0 +1,5 @@
+# Core scientific computation & numerical benchmarks
+numpy>=1.23.0
+
+# Publication figures and visualization
+matplotlib>=3.7.0

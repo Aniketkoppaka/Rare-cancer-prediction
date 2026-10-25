@@ -1,12 +1,14 @@
 """
-Phase 13 — Acquisition Policy Control Experiment: The Critical Triviality Test
+Primary Acquisition Policy Control Experiment
 
 Compares:
-1. Policy A (Information-Theoretic: Entropy x IC over Top-K differential)
-2. Random Candidate-Pool Acquisition (Random h in Differential Pool U, 5 seeds)
-3. Highest-IC Acquisition (max IC in Differential Pool U)
+1. Static Power-Normalized Baseline (A1)
+2. Policy A (Information-Theoretic: Differential Entropy x IC)
+3. Random Candidate-Pool Acquisition (5 random seeds)
+4. Greedy Highest-IC Baseline (max IC in differential pool)
 
-On Locked Test Set (N=1,880, 121 unseen diseases, 12,956 candidate universe).
+Evaluated on the locked zero-shot test set (N=1,880 cases across 121 unseen diseases
+over a 12,956-disease retrieval universe).
 """
 
 import json
@@ -17,7 +19,7 @@ from collections import defaultdict, Counter
 import numpy as np
 
 print("=" * 80)
-print("PHASE 13 — ACQUISITION POLICY CONTROL EXPERIMENT (THE TRIVIALITY TEST)")
+print("PRIMARY ACQUISITION POLICY BENCHMARK & CONTROL SUITE (Q = 5)")
 print("=" * 80)
 
 # --- 1. LOAD DATA ---

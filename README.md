@@ -1,5 +1,10 @@
 # Active Phenotype Acquisition for Zero-Shot Rare Disease Prioritization
 
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Benchmark](https://img.shields.io/badge/Benchmark-v1.0-green.svg)](https://github.com/Aniketkoppaka/Rare-cancer-prediction)
+[![Reproducibility](https://img.shields.io/badge/Reproducibility-Verified-success.svg)](run_reproduction.py)
+
 Official benchmark repository for:  
 **"Active Phenotype Acquisition Resolves the Observation Bottleneck in Zero-Shot Rare Disease Prioritization over a 12,956-Disease Candidate Universe"**
 
@@ -18,48 +23,70 @@ This benchmark formalizes the evaluation of interactive, sequential phenotype el
 
 ---
 
+## 🔬 System Architecture & Interactive Workflow
+
+<p align="center">
+  <img src="figures/figure2.png" width="85%" alt="Interactive Diagnostic User Flow" />
+  <br>
+  <em>Figure 1: Sequential interaction between clinician, diagnostic interface, active acquisition engine, and knowledge base.</em>
+</p>
+
+<p align="center">
+  <img src="figures/figure1.png" width="60%" alt="Diagnostic Flowchart" />
+  <br>
+  <em>Figure 2: Algorithmic decision flowchart: entropy computation, margin weighting, and symmetric negative evidence scoring.</em>
+</p>
+
+---
+
 ## 🚀 Quickstart & Reproducibility
 
-### 1. Requirements
-The benchmark evaluation requires standard Python 3.9+ with `numpy`:
+### 1. Requirements & Setup
+The benchmark evaluation requires Python 3.9+ with standard scientific libraries:
 ```bash
-pip install numpy
+pip install -r requirements.txt
 ```
 
-### 2. Run Primary Benchmark & Acquisition Policy Control
-To evaluate the static baseline ($A1$), Information-Theoretic Active Acquisition (Policy A), 5-seed Random Candidate-Pool Acquisition, Highest-IC control, and statistical significance tests:
-
+### 2. One-Line Full Reproduction Suite
+To run the automated test suite verifying data cleanliness, baseline controls ($Q=5$), adaptive margin benchmarks, and 5-fold cross-validation:
 ```bash
-python benchmark_primary_control.py
+python run_reproduction.py
 ```
 
-### 3. Run Enhanced & Optimized Policy (Fast Inverted-Index Acquisition)
-To run the fast vectorized acquisition engine with candidate elimination margin weighting and dynamic softmax temperature scaling ($\tau$):
+### 3. Individual Benchmark & Policy Evaluation Scripts
 
 ```bash
-python benchmark_adaptive_margin.py
-```
+# Primary benchmark & acquisition policy control (Q=5)
+python src/benchmark_primary_control.py
 
-### 4. Continuous & Extended Query Trajectory Benchmarks ($Q=0 \dots 25$)
-To evaluate step-by-step diagnostic resolution and theoretical scaling limits:
+# Fast vectorized inverted-index engine with candidate margin weighting
+python src/benchmark_adaptive_margin.py
 
-```bash
-# Extended query budget (Q = 0 to 15) on unseen validation & test cohorts
-python benchmark_extended_q.py
+# Extended query inquiry trajectory (Q = 0 to 15)
+python src/benchmark_extended_q.py
 
-# Continuous integer trajectory (Q = 0 to 25)
-python benchmark_continuous_trajectory.py
+# Continuous integer query budget scaling (Q = 0 to 25)
+python src/benchmark_continuous_trajectory.py
 
-# 5-Fold cross-validation & clinical noise / EHR error stress testing
-python audit_crossval_and_noise.py
+# 5-Fold cross-validation & clinical EHR noise stress testing
+python src/audit_crossval_and_noise.py
 
 # High-speed data integrity & null value audit
-python audit_data_integrity.py
+python src/audit_data_integrity.py
+
+# Generate publication-quality trajectory curves & comparison plots
+python src/generate_graphs.py
 ```
 
 ---
 
 ## 📊 Summary of Primary Results (Locked Zero-Shot Test Set, N=1,880)
+
+<p align="center">
+  <img src="figures/figure3.png" width="95%" alt="Continuous Diagnostic Trajectory & Performance Matrix" />
+  <br>
+  <em>Figure 3: Continuous diagnostic scaling trajectory ($Q=0 \dots 25$) and policy comparison matrix on the locked test cohort.</em>
+</p>
 
 ### Baseline & Policy Control ($Q = 5$)
 | Method / Acquisition Strategy | Query Budget ($Q$) | Hits@1 (%) | MRR | Net Error Reduction |
@@ -80,12 +107,33 @@ python audit_data_integrity.py
 | **$Q = 10$** | 89.95% | 91.12% | 91.97% | 0.9057 | +68.00% |
 | **$Q = 15$** | **91.81%** | **92.77%** | **93.09%** | **0.9226** | **+73.90%** |
 
-### Robustness, Noise Resilience & Generalization:
-- **5-Fold Cross-Validation:** Stable diagnostic gain of **$+18.80\text{ pp} \pm 1.20\text{ pp}$** across 5 independent random unseen disease partitions.
-- **Clinical Noise Tolerance:** Preserves **$84.41\%$ Hits@1** at $Q=10$ under $10\%$ clinician misreporting / EHR error rates.
-- **Controlled Statistical Significance ($Q=5$):** Policy advantage over random acquisition: $\mathbf{+4.63\text{ pp}}$ ($p = 2.6 \times 10^{-16}$, McNemar $\chi^2 = 67.1$).
-- **Zero Demotion Rate:** $0 / 1,290$ initially correct cases demoted ($0.00\%$).
-- **Inference Speed:** **~18.09 ms/case** over 12,956 disease search space using inverted indices.
+---
+
+## 📈 Diagnostic Resolution & Empirical Robustness
+
+<p align="center">
+  <img src="figures/figure4.png" width="65%" alt="Diagnostic Rank Migration Confusion Matrix" />
+  <br>
+  <em>Figure 4: Diagnostic tier transition matrix from static ($Q=0$) to 5-step active inquiry ($Q=5$). 0/1,290 cases were demoted (0.00% demotion rate).</em>
+</p>
+
+<p align="center">
+  <img src="figures/figure5.png" width="95%" alt="Candidate Universe Scaling & Entropy Stratification" />
+  <br>
+  <em>Figure 5: (A) Active diagnostic gain scaling across candidate universe sizes ($N=100 \dots 12,956$). (B) Diagnostic resolution stratified across initial differential entropy quartiles.</em>
+</p>
+
+<p align="center">
+  <img src="figures/figure6.png" width="95%" alt="Clinical Noise Resilience & Cross-Validation Stability" />
+  <br>
+  <em>Figure 6: (A) Resilience under simulated real-world EHR noise and clinician reporting error. (B) 5-fold cross-validation stability across independent unseen disease splits ($+18.80 \pm 1.20$ pp gain).</em>
+</p>
+
+<p align="center">
+  <img src="figures/figure7.png" width="95%" alt="Posterior Mass Convergence & Entropy Decay" />
+  <br>
+  <em>Figure 7: Turn-by-turn case trajectory showing candidate posterior mass convergence and differential entropy decay.</em>
+</p>
 
 ---
 
@@ -96,24 +144,28 @@ python audit_data_integrity.py
 │   └── benchmark/
 │       ├── clean_phenopackets.json       # 10,601 patient phenopackets (803 diseases)
 │       ├── failure_cases.json            # Error-case diagnostics & logs
+│       ├── hp.obo                        # Human Phenotype Ontology definition file
 │       └── phenotype.hpoa                # Knowledge base profiles for 12,956 diseases
-├── paper/
-│   ├── paper_draft_v1.0.md               # Original manuscript draft
-│   └── paper_draft_v1.1.md               # Updated comprehensive academic manuscript
-├── research/
-│   ├── final_manuscript_number_manifest.md  # Authoritative numerical manifest
-│   ├── phase14_claim_evidence_matrix.md     # Master claim-evidence traceability
-│   ├── phase16_prior_art_matrix.md          # Comprehensive literature matrix
-│   └── phase18_external_submission_audit.md # Final pre-submission audit report
-├── audit_crossval_and_noise.py        # 5-fold cross-validation & clinical noise stress test
-├── audit_data_integrity.py            # High-speed data cleanliness & null audit
-├── benchmark_adaptive_margin.py       # Vectorized fast acquisition engine & margin policy
-├── benchmark_continuous_trajectory.py # Full step-by-step resolution trajectory (Q=0..25)
-├── benchmark_extended_q.py            # Extended query scaling benchmark (Q=0..15)
-├── benchmark_primary_control.py       # Standalone benchmark & control runner
-├── generate_graphs.py                 # Trajectory & performance matrix visualizer
-├── SUMMARY.md                         # Comprehensive architecture & results documentation
-└── trajectory_and_performance_matrix.png # High-res visual benchmark summary
+├── figures/
+│   ├── figure1.png                       # Algorithmic decision flowchart
+│   ├── figure2.png                       # Interactive clinical user flow sequence
+│   ├── figure3.png                       # Continuous trajectory curve & policy matrix
+│   ├── figure4.png                       # Diagnostic rank migration confusion matrix
+│   ├── figure5.png                       # Candidate universe scaling & entropy quartiles
+│   ├── figure6.png                       # Clinical noise tolerance & 5-fold cross-validation
+│   └── figure7.png                       # Posterior mass convergence & entropy decay
+├── src/
+│   ├── audit_crossval_and_noise.py       # 5-fold cross-validation & clinical noise stress test
+│   ├── audit_data_integrity.py           # High-speed data cleanliness & null audit
+│   ├── benchmark_adaptive_margin.py      # Vectorized fast acquisition engine & margin policy
+│   ├── benchmark_continuous_trajectory.py # Full step-by-step resolution trajectory (Q=0..25)
+│   ├── benchmark_extended_q.py           # Extended query scaling benchmark (Q=0..15)
+│   ├── benchmark_primary_control.py      # Standalone benchmark & control runner
+│   └── generate_graphs.py                # Trajectory & performance matrix visualizer
+├── LICENSE                               # MIT Open-Source License
+├── README.md                             # Documentation, quickstart, & benchmark specs
+├── requirements.txt                      # Python dependencies
+└── run_reproduction.py                   # Master reproduction test runner
 ```
 
 ---
