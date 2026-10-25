@@ -1,7 +1,0 @@
-{
-  "total_cases": 10658,
-  "unique_diseases": 807,
-  "unique_hpos": 4459,
-  "singletons_pct": 11.771995043370508,
-  "few_shot_le_3_pct": 33.82899628252788
-}

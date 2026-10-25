@@ -30,14 +30,14 @@ pip install numpy
 To evaluate the static baseline ($A1$), Information-Theoretic Active Acquisition (Policy A), 5-seed Random Candidate-Pool Acquisition, Highest-IC control, and statistical significance tests:
 
 ```bash
-python run_phase13_control.py
+python benchmark_primary_control.py
 ```
 
 ### 3. Run Enhanced & Optimized Policy (Fast Inverted-Index Acquisition)
 To run the fast vectorized acquisition engine with candidate elimination margin weighting and dynamic softmax temperature scaling ($\tau$):
 
 ```bash
-python run_enhanced_optimized.py
+python benchmark_adaptive_margin.py
 ```
 
 ### 4. Continuous & Extended Query Trajectory Benchmarks ($Q=0 \dots 25$)
@@ -45,16 +45,16 @@ To evaluate step-by-step diagnostic resolution and theoretical scaling limits:
 
 ```bash
 # Extended query budget (Q = 0 to 15) on unseen validation & test cohorts
-python run_extended_q_benchmark.py
+python benchmark_extended_q.py
 
 # Continuous integer trajectory (Q = 0 to 25)
-python run_continuous_q_benchmark.py
+python benchmark_continuous_trajectory.py
 
 # 5-Fold cross-validation & clinical noise / EHR error stress testing
-python run_overfitting_audit.py
+python audit_crossval_and_noise.py
 
 # High-speed data integrity & null value audit
-python check_null_values.py
+python audit_data_integrity.py
 ```
 
 ---
@@ -105,14 +105,14 @@ python check_null_values.py
 │   ├── phase14_claim_evidence_matrix.md     # Master claim-evidence traceability
 │   ├── phase16_prior_art_matrix.md          # Comprehensive literature matrix
 │   └── phase18_external_submission_audit.md # Final pre-submission audit report
-├── check_null_values.py                  # High-speed data cleanliness & null audit
-├── generate_graphs.py                    # Trajectory & performance matrix visualizer
-├── run_continuous_q_benchmark.py         # Full step-by-step resolution trajectory (Q=0..25)
-├── run_enhanced_optimized.py             # Vectorized fast acquisition engine & margin policy
-├── run_extended_q_benchmark.py           # Extended query scaling benchmark (Q=0..15)
-├── run_overfitting_audit.py              # 5-fold cross-validation & clinical noise stress test
-├── run_phase13_control.py                # Standalone benchmark & control runner
-├── SUMMARY.md                            # Comprehensive architecture & results documentation
+├── audit_crossval_and_noise.py        # 5-fold cross-validation & clinical noise stress test
+├── audit_data_integrity.py            # High-speed data cleanliness & null audit
+├── benchmark_adaptive_margin.py       # Vectorized fast acquisition engine & margin policy
+├── benchmark_continuous_trajectory.py # Full step-by-step resolution trajectory (Q=0..25)
+├── benchmark_extended_q.py            # Extended query scaling benchmark (Q=0..15)
+├── benchmark_primary_control.py       # Standalone benchmark & control runner
+├── generate_graphs.py                 # Trajectory & performance matrix visualizer
+├── SUMMARY.md                         # Comprehensive architecture & results documentation
 └── trajectory_and_performance_matrix.png # High-res visual benchmark summary
 ```
 
