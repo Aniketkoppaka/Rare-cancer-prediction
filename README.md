@@ -6,7 +6,7 @@
 [![Reproducibility](https://img.shields.io/badge/Reproducibility-Verified-success.svg)](run_reproduction.py)
 
 Official benchmark repository for:  
-**"Active Phenotype Acquisition Resolves the Observation Bottleneck in Zero-Shot Rare Disease Prioritization over a 12,956-Disease Candidate Universe"**
+**"Entropy-Guided Sequential Phenotype Acquisition for Zero-Shot Rare Disease Prioritization"**
 
 ---
 
@@ -14,10 +14,10 @@ Official benchmark repository for:
 
 This benchmark formalizes the evaluation of interactive, sequential phenotype elicitation for rare disease diagnosis across a large-scale candidate universe.
 
-- **Total Evaluable Cases:** 10,601 clinically annotated patient phenopackets across 803 rare diseases.
-- **Candidate Retrieval Universe:** 12,956 rare diseases from the Human Phenotype Ontology Annotation (`phenotype.hpoa`).
+- **Total Evaluable Cases:** 10,601 clinically annotated patient phenopackets (filtered from 10,658 total records) across 803 rare diseases.
+- **Candidate Retrieval Universe:** 12,956 rare diseases from the Human Phenotype Ontology Annotation (`phenotype.hpoa`: 8,574 OMIM, 4,335 Orphanet, and 47 DECIPHER).
 - **Disease-Disjoint Splits (Seed 42):**
-  - **Training:** 562 diseases (7,721 patient cases)
+  - **Training / Development:** 562 diseases (7,721 patient cases)
   - **Validation:** 120 diseases (1,000 patient cases)
   - **Held-Out Zero-Shot Test:** 121 diseases (1,880 patient cases)
 
@@ -34,7 +34,7 @@ This benchmark formalizes the evaluation of interactive, sequential phenotype el
 <p align="center">
   <img src="figures/figure1.png" width="60%" alt="Diagnostic Flowchart" />
   <br>
-  <em>Figure 2: Algorithmic decision flowchart: entropy computation, margin weighting, and symmetric negative evidence scoring.</em>
+  <em>Figure 2: Algorithmic decision flowchart: entropy computation, margin weighting, and asymmetric negative evidence scoring.</em>
 </p>
 
 ---
@@ -126,7 +126,7 @@ python src/generate_graphs.py
 <p align="center">
   <img src="figures/figure6.png" width="95%" alt="Clinical Noise Resilience & Cross-Validation Stability" />
   <br>
-  <em>Figure 6: (A) Resilience under simulated real-world EHR noise and clinician reporting error. (B) 5-fold cross-validation stability across independent unseen disease splits ($+18.80 \pm 1.20$ pp gain).</em>
+  <em>Figure 6: (A) Resilience under simulated real-world EHR noise and clinician reporting error. (B) 5-repeat disease-disjoint holdout stability across independent unseen disease splits ($84.38\% \pm 1.08\%$ at $Q=5$, $89.82\% \pm 0.95\%$ at $Q=10$).</em>
 </p>
 
 <p align="center">
@@ -142,7 +142,7 @@ python src/generate_graphs.py
 ```
 ├── data/
 │   └── benchmark/
-│       ├── clean_phenopackets.json       # 10,601 patient phenopackets (803 diseases)
+│       ├── clean_phenopackets.json       # 10,601 evaluable patient phenopackets (803 diseases)
 │       ├── failure_cases.json            # Error-case diagnostics & logs
 │       ├── hp.obo                        # Human Phenotype Ontology definition file
 │       └── phenotype.hpoa                # Knowledge base profiles for 12,956 diseases
@@ -173,10 +173,10 @@ python src/generate_graphs.py
 ## 📜 Citation
 
 ```bibtex
-@article{active_phenotype_acquisition_2026,
-  title={Active Phenotype Acquisition Resolves the Observation Bottleneck in Zero-Shot Rare Disease Prioritization over a 12,956-Disease Candidate Universe},
-  author={Anonymous},
-  journal={Under Review},
+@article{singh2026entropy,
+  title={Entropy-Guided Sequential Phenotype Acquisition for Zero-Shot Rare Disease Prioritization},
+  author={Singh, Mritunjay and Koppaka, Aniket Veer and Narooka, Preeti},
+  journal={International Journal of Medical Informatics},
   year={2026}
 }
 ```

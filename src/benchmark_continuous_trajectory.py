@@ -50,6 +50,8 @@ test_dids = set(shuffled_dids[int(0.85 * len(shuffled_dids)):])
 test_cases = [c for c in valid_cases if c['diseases'][0] in test_dids]
 N_t = len(test_cases)
 
+import heapq
+
 def fast_score_and_rank(p_pos, p_neg, target_did, gamma=0.10, lambda_neg=0.50):
     overlap_ic = defaultdict(float)
     for h in p_pos:
@@ -66,11 +68,11 @@ def fast_score_and_rank(p_pos, p_neg, target_did, gamma=0.10, lambda_neg=0.50):
                 if did in cand_scores:
                     cand_scores[did] -= lambda_neg * ic_val
     tgt_score = cand_scores.get(target_did, -999.0)
-    sorted_items = sorted(cand_scores.items(), key=lambda x: x[1], reverse=True)
+    sorted_items = heapq.nlargest(20, cand_scores.items(), key=lambda x: x[1])
     top1_did, top1_score = sorted_items[0] if sorted_items else (None, 0.0)
     better_count = sum(1 for did, s in cand_scores.items() if s > tgt_score)
     r = better_count + 1
-    return r, top1_did, top1_score, sorted_items[:20]
+    return r, top1_did, top1_score, sorted_items
 
 def select_adaptive_query(p_pos, p_neg, top_items, K=15, alpha_margin=0.35):
     top_cands_items = top_items[:K]
@@ -79,6 +81,7 @@ def select_adaptive_query(p_pos, p_neg, top_items, K=15, alpha_margin=0.35):
     for d in top_cands: 
         cand_phenos |= (disease_hpo_sets[d] - p_pos - p_neg)
     if not cand_phenos: return None
+    cand_phenos_sorted = sorted(cand_phenos)
     
     scores_arr = np.array([s for d, s in top_cands_items])
     tau = max(0.5, np.std(scores_arr))
@@ -86,7 +89,7 @@ def select_adaptive_query(p_pos, p_neg, top_items, K=15, alpha_margin=0.35):
     p_dist = exp_s / np.sum(exp_s)
     
     best_h, best_score = None, -1.0
-    for h in cand_phenos:
+    for h in cand_phenos_sorted:
         p_h = sum(p_dist[i] for i, d in enumerate(top_cands) if h in disease_hpo_sets[d])
         if 0.001 < p_h < 0.999:
             ent = - (p_h * math.log2(p_h) + (1 - p_h) * math.log2(1 - p_h))
@@ -98,7 +101,7 @@ def select_adaptive_query(p_pos, p_neg, top_items, K=15, alpha_margin=0.35):
             if score > best_score:
                 best_score = score
                 best_h = h
-    return best_h or max(cand_phenos, key=lambda h: hpo_ic.get(h, 1.0))
+    return best_h or max(cand_phenos_sorted, key=lambda h: hpo_ic.get(h, 1.0))
 
 MAX_Q = 25
 results = {q: {'h1': 0, 'h5': 0, 'h10': 0, 'mrr': 0.0} for q in range(MAX_Q + 1)}

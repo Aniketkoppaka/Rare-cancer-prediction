@@ -1,10 +1,10 @@
 """
 Generates publication-quality diagnostic trajectory graphs and performance matrix plots.
 Outputs:
-1. trajectory_curve_q0_to_25.png
-2. confusion_performance_matrix.png
+1. figures/figure3.png (and figures/fig2_trajectory_and_policies.png)
 """
 
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -12,17 +12,17 @@ import numpy as np
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6), dpi=300)
 
-# Data from Continuous Q=0..25 Benchmark
+# Data from Continuous Q=0..25 Benchmark (Table 4 in Manuscript)
 q_vals = list(range(26))
-hits1 = [68.62, 74.68, 77.77, 80.74, 83.35, 84.73, 87.02, 87.77, 88.94, 89.47, 90.00, 
-         90.69, 91.06, 91.22, 91.33, 91.86, 92.07, 92.18, 92.61, 92.77, 92.93, 93.03, 
-         93.30, 93.46, 93.56, 93.62]
-hits5 = [80.90, 82.71, 84.10, 86.12, 87.71, 88.40, 89.47, 89.95, 90.53, 90.85, 91.12,
-         91.49, 91.76, 91.97, 92.39, 92.71, 92.82, 92.98, 93.09, 93.19, 93.46, 93.67,
-         93.72, 93.83, 93.83, 94.04]
-mrr = [0.7399, 0.7818, 0.8081, 0.8316, 0.8524, 0.8647, 0.8815, 0.8885, 0.8969, 0.9020, 0.9069,
-       0.9117, 0.9146, 0.9168, 0.9187, 0.9225, 0.9244, 0.9261, 0.9290, 0.9304, 0.9321, 0.9340,
-       0.9357, 0.9370, 0.9379, 0.9386]
+hits1 = [68.62, 74.73, 78.46, 80.85, 82.98, 84.52, 86.17, 87.29, 88.35, 89.20, 89.95, 
+         90.48, 90.90, 91.22, 91.54, 91.81, 91.97, 92.13, 92.29, 92.39, 92.50, 92.61, 
+         92.71, 92.77, 92.82, 92.87]
+hits5 = [80.90, 82.71, 85.11, 86.76, 87.98, 88.94, 89.57, 90.05, 90.48, 90.85, 91.12,
+         91.49, 91.86, 92.18, 92.50, 92.77, 92.93, 93.03, 93.14, 93.24, 93.30, 93.35,
+         93.40, 93.46, 93.46, 93.51]
+mrr = [0.7399, 0.7819, 0.8143, 0.8338, 0.8520, 0.8659, 0.8780, 0.8872, 0.8948, 0.9008, 0.9057,
+       0.9102, 0.9140, 0.9172, 0.9201, 0.9226, 0.9242, 0.9256, 0.9268, 0.9279, 0.9288, 0.9296,
+       0.9303, 0.9309, 0.9314, 0.9319]
 
 # Plot 1: Continuous Trajectory Curve
 ax1.plot(q_vals, hits1, marker='o', color='#1f77b4', linewidth=2.5, label='Top-1 Accuracy (Hits@1)')
@@ -39,18 +39,18 @@ ax1.set_xlim(0, 25)
 ax1.legend(loc='lower right', frameon=True, fontsize=10)
 ax1.grid(True, linestyle='--', alpha=0.6)
 
-# Annotations on ax1
-ax1.annotate(f'Q=5: {hits1[5]:.1f}%', xy=(5, hits1[5]), xytext=(5.5, 78),
+# Annotations on ax1 matching Table 4 exactly
+ax1.annotate(f'Q=5: {hits1[5]:.2f}%', xy=(5, hits1[5]), xytext=(5.5, 78),
              arrowprops=dict(arrowstyle='->', color='#1f77b4', lw=1.5), fontsize=10, fontweight='bold')
-ax1.annotate(f'Q=15: {hits1[15]:.1f}%', xy=(15, hits1[15]), xytext=(12, 85),
+ax1.annotate(f'Q=15: {hits1[15]:.2f}%', xy=(15, hits1[15]), xytext=(11.5, 85),
              arrowprops=dict(arrowstyle='->', color='#1f77b4', lw=1.5), fontsize=10, fontweight='bold')
-ax1.annotate(f'Q=25: {hits1[25]:.1f}%', xy=(25, hits1[25]), xytext=(20, 95),
+ax1.annotate(f'Q=25: {hits1[25]:.2f}%', xy=(25, hits1[25]), xytext=(19.2, 94.7),
              arrowprops=dict(arrowstyle='->', color='#1f77b4', lw=1.5), fontsize=10, fontweight='bold')
 
-# Plot 2: Performance Comparison Matrix (Bar / Heatmap style)
-policies = ['Static (A1)', 'Random (Q=5)', 'Highest-IC (Q=5)', 'Adaptive (Q=5)', 'Adaptive (Q=10)', 'Adaptive (Q=25)']
-hits1_bar = [68.62, 80.11, 77.50, 84.73, 90.00, 93.62]
-colors = ['#7f7f7f', '#aec7e8', '#c7c7c7', '#1f77b4', '#17becf', '#005599']
+# Plot 2: Performance Comparison Matrix (Bar / Heatmap style) matching Section 5.3 & Table 4
+policies = ['Static (A1)', 'Highest-IC (Q=5)', 'Random (Q=5)', 'Margin-Boost (Q=5)', 'Policy A (Q=5)', 'Adaptive (Q=15)', 'Adaptive (Q=25)']
+hits1_bar = [68.62, 77.18, 80.43, 84.52, 85.00, 91.81, 92.87]
+colors = ['#7f7f7f', '#c7c7c7', '#aec7e8', '#4a90d9', '#1f77b4', '#17becf', '#005599']
 
 bars = ax2.bar(policies, hits1_bar, color=colors, edgecolor='black', linewidth=1.2, width=0.6)
 ax2.set_title('Acquisition Policy & Scaling Comparison Matrix', fontsize=14, fontweight='bold', pad=12)
@@ -62,8 +62,10 @@ plt.setp(ax2.get_xticklabels(), rotation=25, ha='right', fontsize=10)
 for bar in bars:
     height = bar.get_height()
     ax2.text(bar.get_x() + bar.get_width()/2., height + 0.8,
-             f'{height:.2f}%', ha='center', va='bottom', fontsize=10, fontweight='bold')
+             f'{height:.2f}%', ha='center', va='bottom', fontsize=9.5, fontweight='bold')
 
 plt.tight_layout()
+os.makedirs('figures', exist_ok=True)
+plt.savefig('figures/figure3.png', dpi=300)
 plt.savefig('figures/trajectory_and_performance_matrix.png', dpi=300)
-print("Saved figures/trajectory_and_performance_matrix.png successfully!")
+print("Saved figures/figure3.png and figures/trajectory_and_performance_matrix.png successfully!")

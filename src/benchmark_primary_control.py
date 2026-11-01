@@ -67,6 +67,8 @@ N_t = len(test_cases)
 print(f"[*] Locked Zero-Shot Test Cohort: {N_t} cases | {len(test_dids)} unseen diseases")
 print(f"[*] Candidate Search Universe:   {len(candidate_diseases)} diseases")
 
+import heapq
+
 def fast_score_and_rank(p_pos, p_neg, target_did, gamma=0.10, lambda_neg=0.50):
     overlap_ic = defaultdict(float)
     for h in p_pos:
@@ -83,11 +85,11 @@ def fast_score_and_rank(p_pos, p_neg, target_did, gamma=0.10, lambda_neg=0.50):
                 if did in cand_scores:
                     cand_scores[did] -= lambda_neg * ic_val
     tgt_score = cand_scores.get(target_did, -999.0)
-    sorted_items = sorted(cand_scores.items(), key=lambda x: x[1], reverse=True)
+    sorted_items = heapq.nlargest(10, cand_scores.items(), key=lambda x: x[1])
     top1_did, top1_score = sorted_items[0] if sorted_items else (None, 0.0)
     better_count = sum(1 for did, s in cand_scores.items() if s > tgt_score)
     r = better_count + 1
-    return r, top1_did, top1_score, sorted_items[:10]
+    return r, top1_did, top1_score, sorted_items
 
 def select_policy_a_query(p_pos, p_neg, top10_items, K=10):
     top_cands_items = top10_items[:K]
@@ -95,11 +97,12 @@ def select_policy_a_query(p_pos, p_neg, top10_items, K=10):
     cand_phenos = set()
     for d in top_cands: cand_phenos |= (disease_hpo_sets[d] - p_pos - p_neg)
     if not cand_phenos: return None
+    cand_phenos_sorted = sorted(cand_phenos)
     scores_arr = np.array([s for d, s in top_cands_items])
     exp_s = np.exp(scores_arr - np.max(scores_arr))
     p_dist = exp_s / np.sum(exp_s)
     best_h, best_score = None, -1.0
-    for h in cand_phenos:
+    for h in cand_phenos_sorted:
         p_h = sum(p_dist[i] for i, d in enumerate(top_cands) if h in disease_hpo_sets[d])
         if 0.001 < p_h < 0.999:
             ent = - (p_h * math.log2(p_h) + (1 - p_h) * math.log2(1 - p_h))
@@ -107,7 +110,7 @@ def select_policy_a_query(p_pos, p_neg, top10_items, K=10):
             if score > best_score:
                 best_score = score
                 best_h = h
-    return best_h or max(cand_phenos, key=lambda h: hpo_ic.get(h, 1.0))
+    return best_h or max(cand_phenos_sorted, key=lambda h: hpo_ic.get(h, 1.0))
 
 def select_random_pool_query(p_pos, p_neg, top10_items, rng, K=10):
     top_cands_items = top10_items[:K]
@@ -123,7 +126,7 @@ def select_highest_ic_query(p_pos, p_neg, top10_items, K=10):
     cand_phenos = set()
     for d in top_cands: cand_phenos |= (disease_hpo_sets[d] - p_pos - p_neg)
     if not cand_phenos: return None
-    return max(cand_phenos, key=lambda h: hpo_ic.get(h, 1.0))
+    return max(sorted(cand_phenos), key=lambda h: hpo_ic.get(h, 1.0))
 
 # --- 2. RUN EVALUATIONS ---
 q_steps = [0, 1, 2, 3, 5]
@@ -147,7 +150,15 @@ for c in test_cases:
             
         if q < 5:
             hq = select_policy_a_query(p_curr, n_curr, top10_curr)
-            if not hq: break
+            if not hq:
+                for rem_q in q_steps:
+                    if rem_q > q:
+                        policy_a_results[rem_q]['ranks'].append(r)
+                        if r == 1: policy_a_results[rem_q]['h1'] += 1
+                        if r <= 5: policy_a_results[rem_q]['h5'] += 1
+                        if r <= 10: policy_a_results[rem_q]['h10'] += 1
+                        policy_a_results[rem_q]['mrr'] += 1.0 / r
+                break
             if hq in disease_hpo_sets[tgt]: p_curr.add(hq)
             else: n_curr.add(hq)
 
