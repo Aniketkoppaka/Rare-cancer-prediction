@@ -32,7 +32,7 @@ This benchmark formalizes the evaluation of interactive, sequential phenotype el
 </p>
 
 <p align="center">
-  <img src="figures/figure1.png" width="60%" alt="Diagnostic Flowchart" />
+  <img src="figures/figure1.png" width="85%" alt="Framework Architecture" />
   <br>
   <em>Figure 2: Algorithmic decision flowchart: entropy computation, margin weighting, and asymmetric negative evidence scoring.</em>
 </p>
